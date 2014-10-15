@@ -11,15 +11,24 @@ namespace Fuelman.Models
         protected override void Seed(VehicleDbContext dbContext)
         {
             // seed data
+            // Brand with several models.
             var toyota = new Brand() { BrandName = "Toyota" };
             toyota.Models.Add(new Model() { ModelName = "Corolla" });
-            toyota.Models.Add(new Model() { ModelName = "Vitz" });
             toyota.Models.Add(new Model() { ModelName = "Vios" });
-            toyota.Models.Add(new Model() { ModelName = "Prius" });
+            toyota.Models.Add(new Model() { ModelName = "Prius" });            
+            var vitz = new Model() { ModelName = "Vitz" };
+            toyota.Models.Add(vitz);
+            
+            // Car
+            Vehicle myToyota = new Vehicle() { 
+                Brand = toyota, 
+                Model = vitz, 
+                Name = "MyVitz"
+            };
+
             dbContext.Brands.Add(toyota);
-
-
-                
+            dbContext.Vehicles.Add(myToyota);
+            
             base.Seed(dbContext);
         }
     }

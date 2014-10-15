@@ -30,7 +30,7 @@ namespace Fuelman.Models
         [StringLength(50)]
         public string Name { get; set; }
         
-        [Required]
+        //[Required]
         public RefillUnit RefillUnit { get; set; }
 
         public ICollection<Refill> Refills { get; set; }
