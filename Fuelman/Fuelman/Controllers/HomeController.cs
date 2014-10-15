@@ -14,9 +14,9 @@ namespace Fuelman.Controllers
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
-            Database.SetInitializer<VehicleDbContext>(new DropCreateDatabaseAlways<VehicleDbContext>());
+            Database.SetInitializer<VehicleDbContext>(new VehicleDbContextInitializer());
             VehicleDbContext db = new VehicleDbContext();
-            db.Database.Initialize(true);   
+            db.Database.Initialize(true);
 
             return View();
         }

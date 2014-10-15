@@ -26,7 +26,7 @@ namespace Fuelman
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
 
-            //Database.SetInitializer<VehicleDbContext>(new DropCreateDatabaseAlways<VehicleDbContext>());
+            //Database.SetInitializer<VehicleDbContext>(new VehicleDbContextInitializer());
             //VehicleDbContext db = new VehicleDbContext();
             //db.Database.Initialize(true);
         }

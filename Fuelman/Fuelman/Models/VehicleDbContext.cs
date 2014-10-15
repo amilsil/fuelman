@@ -10,19 +10,11 @@ namespace Fuelman.Models
     {
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Brand> Brands { get; set; }
-        //public DbSet<Model> Models { get; set; }
-
+        
         public VehicleDbContext()
             : base("name=DefaultConnection")
         {
 
         }
-
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    Database.SetInitializer(new VehicleDbContextInitializer());
-
-        //    base.OnModelCreating(modelBuilder);
-        //}
     }
 }
