@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Fuelman.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,6 +13,10 @@ namespace Fuelman.Controllers
         public ActionResult Index()
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+
+            Database.SetInitializer<VehicleDbContext>(new DropCreateDatabaseAlways<VehicleDbContext>());
+            VehicleDbContext db = new VehicleDbContext();
+            db.Database.Initialize(true);   
 
             return View();
         }
