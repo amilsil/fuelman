@@ -10,7 +10,7 @@ namespace Fuelman.Models
     {
         public DbSet<Vehicle> Vehicles { get; set; }
         public DbSet<Brand> Brands { get; set; }
-        
+
         public VehicleDbContext()
             : base("name=DefaultConnection")
         {

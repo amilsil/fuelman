@@ -18,7 +18,7 @@ namespace Fuelman.Models
         public int VehicleId { get; set; }
 
         public int BrandId { get; set; }
-        
+
         [Required]
         public virtual Brand Brand { get; set; }
 
@@ -29,7 +29,7 @@ namespace Fuelman.Models
 
         [StringLength(50)]
         public string Name { get; set; }
-        
+
         //[Required]
         public RefillUnit RefillUnit { get; set; }
 

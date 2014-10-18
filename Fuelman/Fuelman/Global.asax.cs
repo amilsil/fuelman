@@ -1,7 +1,5 @@
-﻿using Fuelman.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -25,10 +23,6 @@ namespace Fuelman
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
-
-            //Database.SetInitializer<VehicleDbContext>(new VehicleDbContextInitializer());
-            //VehicleDbContext db = new VehicleDbContext();
-            //db.Database.Initialize(true);
         }
     }
 }
