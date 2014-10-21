@@ -30,7 +30,7 @@ namespace Fuelman.Models
         [StringLength(50)]
         public string Name { get; set; }
 
-        //[Required]
+        [Required]
         public RefillUnit RefillUnit { get; set; }
 
         public ICollection<Refill> Refills { get; set; }
@@ -77,13 +77,16 @@ namespace Fuelman.Models
         public RefillUnit RefillUnit { get; set; }
 
         [Required]
-        public float Amount { get; set; }
+        public float RefillAmount { get; set; }
 
         [Required]
         public DateTime RefillDate { get; set; }
 
         [Required]
         public long Odometer { get; set; }
+
+        [Required]
+        public bool IsFullTank { get; set; }
 
         public Vehicle Vehicle { get; set; }
     }
