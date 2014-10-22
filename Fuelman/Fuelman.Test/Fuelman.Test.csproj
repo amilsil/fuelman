@@ -51,6 +51,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Feature\UnitTest1.cs" />
+    <Compile Include="Models\InMemoryVehicleRepository.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

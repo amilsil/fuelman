@@ -24,27 +24,37 @@ namespace Fuelman.Models
 
             float totalFuel = 0.0f;
             float? odometerStart = null;
+            bool fullTankFoundPreviously= false;
             foreach (Refill refill in vehicle.Refills.OrderBy(x => x.RefillDate))
             {
-                if (!refill.IsFullTank)
+                if (odometerStart == null)
                 {
-                    totalFuel += refill.RefillAmount;
+                    // From first full tank only we can start calculating fuel economy.
+                    if (refill.IsFullTank)
+                        odometerStart = refill.Odometer;
                 }
                 else
+                    totalFuel += refill.RefillAmount;
+
+                // If this one is a full tank, we can calculate the economy.
+                if (refill.IsFullTank)
                 {
-                    // Create a new FuelEconomyResult for this segment.                    
-                    if (odometerStart != null)
+                    if (fullTankFoundPreviously)
                     {
+                        // If previous one is a full tank, and this one also
+                        // Calcualte the economy.
                         FuelEconomyEntry fee = new FuelEconomyEntry()
                         {
                             Fuel = totalFuel,
-                            Distance = refill.Odometer - (float) odometerStart
+                            Distance = refill.Odometer - (float)odometerStart
                         };
                         fer.Add(fee);
-                    }
 
-                    // Reset the odometer start for the next segment.
-                    odometerStart = refill.Odometer;
+                        // Reset the values for next calc.
+                        totalFuel = 0.0f;
+                        odometerStart = refill.Odometer;
+                    }
+                    fullTankFoundPreviously = true;
                 }
             }
 

@@ -37,8 +37,7 @@ namespace Fuelman.Models
                 new Refill() { 
                     RefillAmount = 5000.00f,
                     Odometer = 1000,
-                    RefillDate = DateTime.Today.AddDays(-5),
-                    RefillUnit = kmpl,
+                    RefillDate = DateTime.Today.AddDays(-5),                    
                     IsFullTank = true
                 }
             );
@@ -49,8 +48,7 @@ namespace Fuelman.Models
                 {
                     RefillAmount = 5000.00f,
                     Odometer = 1200,
-                    RefillDate = DateTime.Today,
-                    RefillUnit = kmpl,
+                    RefillDate = DateTime.Today,                    
                     IsFullTank = true
                 }
             );  

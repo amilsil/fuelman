@@ -74,9 +74,6 @@ namespace Fuelman.Models
         public int RefillId { get; set; }
 
         [Required]
-        public RefillUnit RefillUnit { get; set; }
-
-        [Required]
         public float RefillAmount { get; set; }
 
         [Required]
