@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Fuelman.DAL
 {
-    public interface IVehicleRepository<TEntity> where TEntity : BaseModel
+    public interface IVehicleRepository<TEntity>
+        where TEntity : class, IBaseEntity
     {
         IEnumerable<TEntity> Get(
             Expression<Func<TEntity, bool>> filter, 

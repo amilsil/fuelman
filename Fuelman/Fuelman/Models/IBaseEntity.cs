@@ -5,8 +5,8 @@ using System.Web;
 
 namespace Fuelman.Models
 {
-    public abstract class BaseModel
+    public interface IBaseEntity
     {
-        public virtual int Id { get; set; }
+        int Id { get; set; }
     }
 }
