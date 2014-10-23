@@ -12,7 +12,7 @@ namespace Fuelman.Test.Feature
         private Vehicle Insert_And_Prepare_Vehicle()
         {
             // GenericRepository<Vehicle> vehicleRepository = uof.VehicleRepository;
-            InMemoryVehicleRepository vehicleRepository = new InMemoryVehicleRepository();
+            InMemoryVehicleRepository<Vehicle> vehicleRepository = new InMemoryVehicleRepository<Vehicle>();
 
             Brand audi = new Brand() { BrandName = "Audi" };
             Model a4 = new Model() { ModelName = "A4" };
@@ -28,7 +28,7 @@ namespace Fuelman.Test.Feature
                 RefillUnit = litres
             };
 
-            vehicleRepository.InsertVehicle(myAudiA4);
+            vehicleRepository.Insert(myAudiA4);
 
             return myAudiA4;
         }

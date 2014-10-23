@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Fuelman.Models
 {
-    public class Vehicle
+    public class Vehicle : BaseModel
     {
         public Vehicle()
         {
@@ -15,7 +15,7 @@ namespace Fuelman.Models
         }
 
         [Key]
-        public int VehicleId { get; set; }
+        public override int Id { get; set; }
 
         public int BrandId { get; set; }
 
@@ -36,7 +36,7 @@ namespace Fuelman.Models
         public ICollection<Refill> Refills { get; set; }
     }
 
-    public class Brand
+    public class Brand : BaseModel
     {
         public Brand()
         {
@@ -45,7 +45,7 @@ namespace Fuelman.Models
 
         [Key]
         [Column(Order = 1)]
-        public int BrandId { get; set; }
+        public override int Id { get; set; }
 
         [Key]
         [Column(Order = 2)]

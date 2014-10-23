@@ -3,38 +3,43 @@ using Fuelman.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Fuelman.Test.Models
 {
-    class InMemoryVehicleRepository : IVehicleRepository
+    class InMemoryVehicleRepository<TEntity> : IVehicleRepository<TEntity>
+        where TEntity : BaseModel
     {
-        private List<Vehicle> _db = new List<Vehicle>();
+        private List<TEntity> _db = new List<TEntity>();
 
         public Exception ExceptionToThrow { get; set; }
 
-        public IEnumerable<Fuelman.Models.Vehicle> GetVehicles()
+        public IEnumerable<TEntity> Get(
+            Expression<Func<TEntity, bool>> filter = null,
+            Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+            string includeProperties = "")
         {
             return _db.ToList();
         }
 
-        public Fuelman.Models.Vehicle GetVehicleByID(int VehicleId)
+        public TEntity GetByID(object id)
         {
-            return _db.FirstOrDefault(d => d.VehicleId == VehicleId);
+            return _db.FirstOrDefault(d => d.Id == (int) id);
         }
 
-        public void InsertVehicle(Fuelman.Models.Vehicle Vehicle)
+        public void Insert(TEntity entity)
         {
-            _db.Add(Vehicle);
+            _db.Add(entity);
         }
 
-        public void DeleteVehicle(int VehicleID)
+        public void Delete(object id)
         {
-            _db.Remove(GetVehicleByID(VehicleID));
+            _db.Remove(GetByID(id));
         }
 
-        public void UpdateVehicle(Fuelman.Models.Vehicle Vehicle)
+        public void Update(TEntity entity)
         {
             // Nothing to do. :)
         }
@@ -42,6 +47,12 @@ namespace Fuelman.Test.Models
         public void Save()
         {
             // Nothing to do :)
+        }
+
+
+        public void Delete(TEntity entityToDelete)
+        {
+            _db.Remove(entityToDelete);
         }
     }
 }

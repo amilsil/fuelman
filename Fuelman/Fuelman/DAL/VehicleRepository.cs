@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Fuelman.DAL
 {
-    public class VehicleRepository : IVehicleRepository
+    public class VehicleRepository 
     {
         VehicleDbContext context;
 

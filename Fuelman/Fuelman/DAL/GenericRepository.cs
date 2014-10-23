@@ -8,7 +8,8 @@ using System.Linq.Expressions;
 
 namespace Fuelman.DAL
 {
-    public class GenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IVehicleRepository<TEntity>
+        where TEntity : BaseModel
     {
         internal VehicleDbContext context;
         internal DbSet<TEntity> dbSet;
@@ -76,6 +77,10 @@ namespace Fuelman.DAL
         {
             dbSet.Attach(entityToUpdate);
             context.Entry(entityToUpdate).State = EntityState.Modified;
+        }
+
+        public virtual void Save()
+        {
         }
     }
 }
