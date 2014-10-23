@@ -11,6 +11,7 @@ namespace Fuelman.DAL
         private VehicleDbContext context = new VehicleDbContext();
         private GenericRepository<Vehicle> vehicleRepository;
         private GenericRepository<Brand> brandRepository;
+        private GenericRepository<Model> modelRepository;
 
         public GenericRepository<Vehicle> VehicleRepository 
         { 
@@ -31,6 +32,18 @@ namespace Fuelman.DAL
                     this.brandRepository = new GenericRepository<Brand>(context);
                 }
                 return this.brandRepository;
+            }
+        }
+
+        public GenericRepository<Model> ModelRepository
+        {
+            get
+            {
+                if (this.modelRepository == null)
+                {
+                    this.modelRepository = new GenericRepository<Model>(context);
+                }
+                return this.modelRepository;
             }
         }
 

@@ -81,6 +81,7 @@ namespace Fuelman.DAL
 
         public virtual void Save()
         {
+            context.SaveChanges();
         }
     }
 }

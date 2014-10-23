@@ -15,22 +15,22 @@ namespace Fuelman.Models
         }
 
         [Key]
+        [ScaffoldColumn(false)]
         public int Id { get; set; }
 
         public int BrandId { get; set; }
 
-        [Required]
         public virtual Brand Brand { get; set; }
 
         public int ModelId { get; set; }
 
-        [Required]
         public virtual Model Model { get; set; }
 
         [StringLength(50)]
         public string Name { get; set; }
 
-        [Required]
+        public string RefillUnitId { get; set; }
+
         public RefillUnit RefillUnit { get; set; }
 
         public ICollection<Refill> Refills { get; set; }
@@ -47,8 +47,6 @@ namespace Fuelman.Models
         [Column(Order = 1)]
         public int Id { get; set; }
 
-        [Key]
-        [Column(Order = 2)]
         [StringLength(30)]
         [Required]
         public string BrandName { get; set; }
@@ -56,10 +54,10 @@ namespace Fuelman.Models
         public ICollection<Model> Models { get; set; }
     }
 
-    public class Model
+    public class Model : IBaseEntity
     {
         [Key]
-        public int ModelId { get; set; }
+        public int Id { get; set; }
 
         [StringLength(30)]
         [Required]

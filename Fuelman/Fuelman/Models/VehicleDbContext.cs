@@ -17,5 +17,7 @@ namespace Fuelman.Models
         {
 
         }
+
+        public DbSet<Model> Models { get; set; }
     }
 }
