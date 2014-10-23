@@ -12,7 +12,7 @@ namespace Fuelman.Test.Feature
         private Vehicle Insert_And_Prepare_Vehicle()
         {
             // GenericRepository<Vehicle> vehicleRepository = uof.VehicleRepository;
-            InMemoryVehicleRepository<Vehicle> vehicleRepository = new InMemoryVehicleRepository<Vehicle>();
+            InMemoryGenericRepository<Vehicle> vehicleRepository = new InMemoryGenericRepository<Vehicle>();
 
             Brand audi = new Brand() { BrandName = "Audi" };
             Model a4 = new Model() { ModelName = "A4" };

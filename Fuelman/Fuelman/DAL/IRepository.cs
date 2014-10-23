@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fuelman.DAL
 {
-    public interface IVehicleRepository<TEntity>
+    public interface IRepository<TEntity>
         where TEntity : class//, IBaseEntity
     {
         IEnumerable<TEntity> Get(

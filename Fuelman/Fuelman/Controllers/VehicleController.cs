@@ -15,9 +15,9 @@ namespace Fuelman.Controllers
 {
     public class VehicleController : ApiController
     {
-        private GenericRepository<Vehicle> vehicleRepository;
-        private GenericRepository<Model> modelRepository;
-        private GenericRepository<Brand> brandRepository;
+        private IRepository<Vehicle> vehicleRepository;
+        private IRepository<Model> modelRepository;
+        private IRepository<Brand> brandRepository;
 
         public VehicleController()
         {
@@ -26,10 +26,22 @@ namespace Fuelman.Controllers
             modelRepository = uof.ModelRepository;
             brandRepository = uof.BrandRepository;
         }
+
+        public VehicleController(
+            IRepository<Vehicle> vehicleRepository,
+            IRepository<Brand> brandRepository,
+            IRepository<Model> modelRepository)
+        {
+            this.vehicleRepository = vehicleRepository;
+            this.modelRepository = modelRepository;
+            this.brandRepository = brandRepository;
+        }
+
+
         // GET api/Vehicle
         public IEnumerable<Vehicle> GetVehicles()
         {
-            var vehicles = vehicleRepository.Get();
+            var vehicles = vehicleRepository.Get(null);
             return vehicles.AsEnumerable();
         }
 

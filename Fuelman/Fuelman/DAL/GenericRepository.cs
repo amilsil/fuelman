@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 
 namespace Fuelman.DAL
 {
-    public class GenericRepository<TEntity> : IVehicleRepository<TEntity>
+    public class GenericRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IBaseEntity
     {
         internal VehicleDbContext context;

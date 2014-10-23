@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Fuelman.Test.Models
 {
-    class InMemoryVehicleRepository<TEntity> : IVehicleRepository<TEntity>
+    class InMemoryGenericRepository<TEntity> : IRepository<TEntity>
         where TEntity : class, IBaseEntity
     {
         private List<TEntity> _db = new List<TEntity>();

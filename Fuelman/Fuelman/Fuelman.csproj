@@ -185,7 +185,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\VehicleController.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
-    <Compile Include="DAL\IVehicleRepository.cs" />
+    <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
