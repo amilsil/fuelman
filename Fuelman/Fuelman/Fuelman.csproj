@@ -182,8 +182,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\API\BrandController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\VehicleController.cs" />
+    <Compile Include="Controllers\API\VehicleController.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
     <Compile Include="DAL\IRepository.cs" />
     <Compile Include="DAL\UnitOfWork.cs" />

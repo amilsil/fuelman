@@ -49,7 +49,7 @@ namespace Fuelman.DAL
             }
         }
 
-        public virtual TEntity GetByID(object id, string includeProperties = "")
+        public virtual TEntity GetByID(object id)
         {
             return dbSet.Find(id);
         }

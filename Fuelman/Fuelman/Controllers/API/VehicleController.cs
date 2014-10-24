@@ -11,7 +11,7 @@ using System.Web.Http;
 using Fuelman.DAL;
 using Fuelman.Models;
 
-namespace Fuelman.Controllers
+namespace Fuelman.Controllers.API
 {
     public class VehicleController : ApiController
     {
@@ -26,17 +26,6 @@ namespace Fuelman.Controllers
             modelRepository = uof.ModelRepository;
             brandRepository = uof.BrandRepository;
         }
-
-        public VehicleController(
-            IRepository<Vehicle> vehicleRepository,
-            IRepository<Brand> brandRepository,
-            IRepository<Model> modelRepository)
-        {
-            this.vehicleRepository = vehicleRepository;
-            this.modelRepository = modelRepository;
-            this.brandRepository = brandRepository;
-        }
-
 
         // GET api/Vehicle
         public IEnumerable<Vehicle> GetVehicles()
