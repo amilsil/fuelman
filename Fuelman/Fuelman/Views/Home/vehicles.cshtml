@@ -12,6 +12,10 @@
             <div>Name</div>
             <input type="text" data-bind="value: $data.Name" />
         </div>
+
+        <div data-bind="text: $data.BrandName"></div>
+        <div data-bind="text: $data.ModelName"></div>
+
         <div>
             <input type="button" value="Update" data-bind="click: $root.update" />
             <input type="button" value="Delete" data-bind="click: $root.remove" />

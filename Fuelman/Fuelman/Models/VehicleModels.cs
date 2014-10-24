@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,28 +12,51 @@ namespace Fuelman.Models
     {
         public Vehicle()
         {
-            this.Refills = new HashSet<Refill>();
+            if(this.Refills == null)
+                this.Refills = new HashSet<Refill>();
         }
 
         [Key]
         [ScaffoldColumn(false)]
         public int Id { get; set; }
 
-        public int BrandId { get; set; }
-
-        public virtual Brand Brand { get; set; }
-
-        public int ModelId { get; set; }
-
-        public virtual Model Model { get; set; }
-
         [StringLength(50)]
         public string Name { get; set; }
 
-        public string RefillUnitId { get; set; }
+        public int BrandId { get; set; }
+        [JsonIgnore]
+        public virtual Brand Brand { get; set; }
+        [NotMapped]
+        [ScaffoldColumn(false)]
+        public virtual string BrandName
+        {
+            get
+            {
+                if (this.Brand != null)
+                    return this.Brand.BrandName;
+                else
+                    return "";
+            }
+        }
 
+        public int ModelId { get; set; }
+        [JsonIgnore]
+        public virtual Model Model { get; set; }
+        [NotMapped]
+        [ScaffoldColumn(false)]
+        public virtual string ModelName
+        {
+            get
+            {
+                if (this.Model != null)
+                    return this.Model.ModelName;
+                else
+                    return "";
+            }
+        }
+
+        public int RefillUnitId { get; set; }
         public RefillUnit RefillUnit { get; set; }
-
         public ICollection<Refill> Refills { get; set; }
     }
 
@@ -51,7 +75,7 @@ namespace Fuelman.Models
         [Required]
         public string BrandName { get; set; }
 
-        public ICollection<Model> Models { get; set; }
+        public virtual ICollection<Model> Models { get; set; }
     }
 
     public class Model : IBaseEntity
@@ -66,10 +90,10 @@ namespace Fuelman.Models
         public Brand Brand { get; set; }
     }
 
-    public class Refill
+    public class Refill : IBaseEntity
     {
         [Key]
-        public int RefillId { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public float RefillAmount { get; set; }
@@ -86,10 +110,12 @@ namespace Fuelman.Models
         public Vehicle Vehicle { get; set; }
     }
 
-    public class RefillUnit
+    public class RefillUnit : IBaseEntity
     {
         [Key]
-        [StringLength(5)]
+        public int Id { get; set; }
+
+        [StringLength(5)]        
         public string Unit { get; set; }
     }
 }

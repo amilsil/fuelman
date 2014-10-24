@@ -41,7 +41,7 @@ namespace Fuelman.Controllers
         // GET api/Vehicle
         public IEnumerable<Vehicle> GetVehicles()
         {
-            var vehicles = vehicleRepository.Get(null);
+            var vehicles = vehicleRepository.Get(null, null, "RefillUnit");
             return vehicles.AsEnumerable();
         }
 

@@ -17,7 +17,7 @@ namespace Fuelman.DAL
             IOrderedQueryable<TEntity>> orderBy = null,
             string includeProperties = "");
 
-        TEntity GetByID(object id);
+        TEntity GetByID(object id, string includeProperties = "");
         void Insert(TEntity entity);
         void Delete(object id);
         void Delete(TEntity entityToDelete);

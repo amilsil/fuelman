@@ -12,14 +12,11 @@ namespace Fuelman.Models
         {
             // seed data
             // Refill Units 
-            var kmpl = new RefillUnit() { Unit = "kmpl" };
-            dbContext.RefillUnits.Add(kmpl);
+            RefillUnit unit = new RefillUnit() { Unit = "l" };
+            dbContext.RefillUnits.Add(unit);
 
             // Brand with several models.
             var toyotaBrand = new Brand() { BrandName = "Toyota" };
-            toyotaBrand.Models.Add(new Model() { ModelName = "Corolla" });
-            toyotaBrand.Models.Add( new Model() { ModelName = "Vios" });
-            toyotaBrand.Models.Add(new Model() { ModelName = "Prius" });
             var vitzModel = new Model() { ModelName = "Vitz" };
             toyotaBrand.Models.Add(vitzModel);
 
@@ -29,15 +26,16 @@ namespace Fuelman.Models
                 Brand = toyotaBrand,
                 Model = vitzModel,
                 Name = "MyVitz",
-                RefillUnit = kmpl
+                RefillUnit = unit
             };
 
             // Refill
             myToyota.Refills.Add(
-                new Refill() { 
+                new Refill()
+                {
                     RefillAmount = 5000.00f,
                     Odometer = 1000,
-                    RefillDate = DateTime.Today.AddDays(-5),                    
+                    RefillDate = DateTime.Today.AddDays(-5),
                     IsFullTank = true
                 }
             );
@@ -48,7 +46,7 @@ namespace Fuelman.Models
                 {
                     RefillAmount = 5000.00f,
                     Odometer = 1200,
-                    RefillDate = DateTime.Today,                    
+                    RefillDate = DateTime.Today,
                     IsFullTank = true
                 }
             );  
