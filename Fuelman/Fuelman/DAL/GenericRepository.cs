@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 
@@ -75,8 +76,27 @@ namespace Fuelman.DAL
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            dbSet.Attach(entityToUpdate);
-            context.Entry(entityToUpdate).State = EntityState.Modified;
+            // Create an entry in the context for the entityToUpdate
+            // If it is Detached, we check if there's an entry matching the same Id.
+            // If we do, we update that entry with the new values.
+            // Else, we can set the new entry modified. 
+            // which will save the entry to the database.
+
+            var entry = context.Entry<TEntity>(entityToUpdate);
+            if (entry.State == EntityState.Detached)
+            {
+                TEntity attachedEntity = dbSet.SingleOrDefault(e => e.Id == entityToUpdate.Id);
+                if (attachedEntity != null)
+                {
+                    var attachedEntry = context.Entry(attachedEntity);
+                    attachedEntry.CurrentValues.SetValues(entityToUpdate);
+                }
+                else
+                {
+                    entry.State = EntityState.Modified;
+                }
+            }
+            
         }
 
         public virtual void Save()

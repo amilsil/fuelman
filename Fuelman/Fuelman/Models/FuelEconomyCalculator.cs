@@ -5,6 +5,9 @@ using System.Web;
 
 namespace Fuelman.Models
 {
+    /// <summary>
+    /// A singleton service that calculates the FuelEconomy.
+    /// </summary>
     public class FuelEconomyCalculator
     {
         private static FuelEconomyCalculator _Calculator;
@@ -27,22 +30,23 @@ namespace Fuelman.Models
             bool fullTankFoundPreviously= false;
             foreach (Refill refill in vehicle.Refills.OrderBy(x => x.RefillDate))
             {
+                // We can only start calculating fuel economy after the first fuel full tank fill.
+                // That's where the mileage start should be.
+                // Then onwards we should accumulate the fuel refilled, until another full tank fill.
                 if (odometerStart == null)
                 {
-                    // From first full tank only we can start calculating fuel economy.
                     if (refill.IsFullTank)
                         odometerStart = refill.Odometer;
                 }
                 else
                     totalFuel += refill.RefillAmount;
 
-                // If this one is a full tank, we can calculate the economy.
+                // If we have had two full tank fills, then we can calculate the fuel economy
+                // between them.
                 if (refill.IsFullTank)
                 {
                     if (fullTankFoundPreviously)
                     {
-                        // If previous one is a full tank, and this one also
-                        // Calcualte the economy.
                         FuelEconomyEntry fee = new FuelEconomyEntry()
                         {
                             Fuel = totalFuel,
@@ -62,17 +66,21 @@ namespace Fuelman.Models
         }
     }
 
+    /// <summary>
+    /// FuelEconomyResult is an Enumeration of FuelEconomyEntry s.
+    /// </summary>
     public class FuelEconomyResult : List<FuelEconomyEntry>
     {
         
     }
 
+    /// <summary>
+    /// A fuel economy calculation result between two full tank refills.
+    /// </summary>
     public class FuelEconomyEntry
     {
         public float Fuel { get; set; }
-
         public float Distance { get; set; }
-
         public float Economy
         {
             get 

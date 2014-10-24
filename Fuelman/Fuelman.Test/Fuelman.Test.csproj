@@ -51,8 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Controllers\VehicleControllerAPITest.cs" />
-    <Compile Include="Feature\UnitTest1.cs" />
+    <Compile Include="Feature\FuelEconomyCalculationTester.cs" />
     <Compile Include="Models\InMemoryGenericRepository.cs" />
     <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -62,6 +61,9 @@
       <Project>{53900755-03f1-49e5-acaf-d830fa530216}</Project>
       <Name>Fuelman</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

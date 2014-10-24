@@ -7,7 +7,7 @@ using Fuelman.Test.Models;
 namespace Fuelman.Test.Feature
 {
     [TestClass]
-    public class UnitTest1
+    public class FuelEconomyCalculationTester
     {
         private Vehicle Insert_And_Prepare_Vehicle()
         {

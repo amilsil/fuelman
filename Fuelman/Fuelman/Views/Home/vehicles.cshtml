@@ -1,0 +1,77 @@
+﻿@model Fuelman.Models.Vehicle
+
+@{
+    ViewBag.Title = "vehicles";
+}
+
+<h2>vehicles</h2>
+
+<ul id="update-vehicles" data-bind="foreach: vehicles">
+    <li>
+        <div>
+            <div>Name</div>
+            <input type="text" data-bind="value: $data.Name" />
+        </div>
+        <div>
+            <input type="button" value="Update" data-bind="click: $root.update" />
+            <input type="button" value="Delete" data-bind="click: $root.remove" />
+        </div>
+    </li>
+</ul>
+
+<div>
+    <h2>Add New Vehicle</h2>
+    <form id="addVehicle" data-bind="submit: create">
+        @Html.ValidationSummary(true)
+        <fieldset>
+            <legend>Vehicle</legend>
+            @Html.EditorForModel()
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+        </fieldset>
+    </form>
+</div>
+
+@section Scripts {
+  @Scripts.Render("~/bundles/jqueryval")
+  <script type="text/javascript" src="@Url.Content("~/Scripts/knockout-2.2.0.js")"></script> 
+  <script type="text/javascript">
+  
+      function VehiclesViewModel() {
+          var self = this;
+          self.vehicles = ko.observableArray();
+
+          var baseUri = '@ViewBag.ApiUrl';
+
+          self.create = function (formElement) {
+              // If the form data is valid, post the serialized form data to the web API.
+              $(formElement).validate();
+
+              if ($(formElement).valid()) {
+                  $.post(baseUri, $(formElement).serialize(), null, "json")
+                      .done(function (o) {
+                          // Add the new product to the view-model.
+                          self.vehicles.push(o);
+                      });
+              }
+          }
+
+          self.update = function (vehicle) {
+              $.ajax({ type: "PUT", url: baseUri + '/' + vehicle.Id, data: vehicle });
+          }
+
+          self.remove = function (vehicle) {
+              // First remove from the server, then from the view-model.
+              $.ajax({ type: "DELETE", url: baseUri + '/' + vehicle.Id })
+                  .done(function () { self.vehicles.remove(vehicle); });
+          }
+
+          $.getJSON(baseUri, self.vehicles);
+      }
+
+      $(document).ready(function () {
+          ko.applyBindings(new VehiclesViewModel());
+      });
+  </script>
+}
