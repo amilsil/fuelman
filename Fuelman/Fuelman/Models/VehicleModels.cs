@@ -56,6 +56,7 @@ namespace Fuelman.Models
         }
 
         public int RefillUnitId { get; set; }
+        [ScaffoldColumn(false)]
         public RefillUnit RefillUnit { get; set; }
         public ICollection<Refill> Refills { get; set; }
     }
@@ -86,7 +87,7 @@ namespace Fuelman.Models
         [StringLength(30)]
         [Required]
         public string ModelName { get; set; }
-
+        
         public Brand Brand { get; set; }
     }
 

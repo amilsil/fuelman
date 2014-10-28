@@ -29,7 +29,48 @@
         @Html.ValidationSummary(true)
         <fieldset>
             <legend>Vehicle</legend>
-            @Html.EditorForModel()
+            <div class="editor-label">
+                @Html.LabelFor(model => model.Name)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.Name)
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.BrandId)
+            </div>
+            <div class="editor-field">
+                <select
+                    data-bind="foreach: brands, value: selectedBrand"
+                    data-val="true" 
+                    data-val-number="The field BrandId must be a number." 
+                    data-val-required="The BrandId field is required." 
+                    id="BrandId" name="BrandId">
+                    <option data-bind="text: BrandName, value: Id"></option>
+                    
+                </select>
+            </div>
+            
+            <div class="editor-label">
+                @Html.LabelFor(model => model.ModelId)
+            </div>
+            <div class="editor-field">
+                 <select
+                    data-bind="foreach: models, value: selectedModel"
+                    data-val="true" 
+                    data-val-number="The field BrandId must be a number." 
+                    data-val-required="The BrandId field is required." 
+                    id="ModelId" name="ModelId">
+                    <option data-bind="text: ModelName, value: ModelId"></option>
+                </select>
+            </div>
+
+            <div class="editor-label">
+                @Html.LabelFor(model => model.RefillUnitId)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.RefillUnitId)
+            </div>
             <p>
                 <input type="submit" value="Save" />
             </p>
@@ -41,12 +82,26 @@
   @Scripts.Render("~/bundles/jqueryval")
   <script type="text/javascript" src="@Url.Content("~/Scripts/knockout-2.2.0.js")"></script> 
   <script type="text/javascript">
-  
+    
       function VehiclesViewModel() {
           var self = this;
           self.vehicles = ko.observableArray();
+          self.brands = ko.observableArray();
+          self.models = ko.observable();
+          self.selectedBrand = ko.observable();
+          self.selectedModel = ko.observable();
 
-          var baseUri = '@ViewBag.ApiUrl';
+          self.baseUri = '@ViewBag.ApiUrl';
+
+          self.vehicleApi = function () { return self.baseUri + "/vehicle"; };
+          self.brandApi = function () { return self.baseUri + "/brand"; };
+          self.modelsApi = function () { return self.baseUri + "/model"; };
+
+          self.Models = ko.computed(function () {
+              $.getJSON(self.modelsApi() + "?brand=" + self.selectedBrand(), self.models);
+              self.models[self.selectedBrand];
+              return self.models;
+          });
 
           self.create = function (formElement) {
               // If the form data is valid, post the serialized form data to the web API.
@@ -71,7 +126,8 @@
                   .done(function () { self.vehicles.remove(vehicle); });
           }
 
-          $.getJSON(baseUri, self.vehicles);
+          $.getJSON(self.vehicleApi(), self.vehicles);
+          $.getJSON(self.brandApi(), self.brands);          
       }
 
       $(document).ready(function () {

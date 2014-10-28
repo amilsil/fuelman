@@ -183,6 +183,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\BrandController.cs" />
+    <Compile Include="Controllers\API\ModelController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\API\VehicleController.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
