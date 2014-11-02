@@ -87,7 +87,7 @@
           var self = this;
           self.vehicles = ko.observableArray();
           self.brands = ko.observableArray();
-          self.models = ko.observable();
+          self.models = ko.observableArray();
           self.selectedBrand = ko.observable();
           self.selectedModel = ko.observable();
 
@@ -97,9 +97,11 @@
           self.brandApi = function () { return self.baseUri + "/brand"; };
           self.modelsApi = function () { return self.baseUri + "/model"; };
 
-          self.Models = ko.computed(function () {
+          self.computedModels = ko.computed(function () {
+              if (self.selectedBrand() == undefined)
+                  self.selectedBrand(1);
+
               $.getJSON(self.modelsApi() + "?brand=" + self.selectedBrand(), self.models);
-              self.models[self.selectedBrand];
               return self.models;
           });
 
@@ -127,7 +129,7 @@
           }
 
           $.getJSON(self.vehicleApi(), self.vehicles);
-          $.getJSON(self.brandApi(), self.brands);          
+          $.getJSON(self.brandApi(), self.brands);
       }
 
       $(document).ready(function () {
