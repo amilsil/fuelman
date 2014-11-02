@@ -34,6 +34,7 @@
             </div>
             <div class="editor-field">
                 @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
             </div>
 
             <div class="editor-label">
@@ -49,6 +50,7 @@
                     <option data-bind="text: BrandName, value: Id"></option>
                     
                 </select>
+                @Html.ValidationMessageFor(model => model.BrandId)
             </div>
             
             <div class="editor-label">
@@ -63,13 +65,22 @@
                     id="ModelId" name="ModelId">
                     <option data-bind="text: ModelName, value: Id"></option>
                 </select>
+                @Html.ValidationMessageFor(model => model.ModelId)
             </div>
 
             <div class="editor-label">
                 @Html.LabelFor(model => model.RefillUnitId)
             </div>
             <div class="editor-field">
-                @Html.EditorFor(model => model.RefillUnitId)
+                <select
+                    data-bind="foreach: refillUnits"
+                    data-val="true" 
+                    data-val-number="The field BrandId must be a number." 
+                    data-val-required="The BrandId field is required." 
+                    id="RefillUnitId" name="RefillUnitId">
+                    <option data-bind="text: Description, value: Id"></option>
+                </select>
+                @Html.ValidationMessageFor(model => model.RefillUnitId)
             </div>
             <p>
                 <input type="submit" value="Save" />
@@ -85,17 +96,19 @@
     
       function VehiclesViewModel() {
           var self = this;
-          self.vehicles = ko.observableArray();
           self.brands = ko.observableArray();
           self.models = ko.observableArray();
+          self.refillUnits = ko.observableArray();
           self.selectedBrand = ko.observable();
           self.selectedModel = ko.observable();
+          self.vehicles = ko.observableArray();
 
           self.baseUri = '@ViewBag.ApiUrl';
 
           self.vehicleApi = function () { return self.baseUri + "/vehicle"; };
           self.brandApi = function () { return self.baseUri + "/brand"; };
           self.modelsApi = function () { return self.baseUri + "/model"; };
+          self.refillUnitApi = function () { return self.baseUri + "/refillunit"; };
 
           self.computedModels = ko.computed(function () {
               if (self.selectedBrand() == undefined)
@@ -130,6 +143,7 @@
 
           $.getJSON(self.vehicleApi(), self.vehicles);
           $.getJSON(self.brandApi(), self.brands);
+          $.getJSON(self.refillUnitApi(), self.refillUnits);
       }
 
       $(document).ready(function () {

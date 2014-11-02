@@ -21,6 +21,7 @@ namespace Fuelman.Models
         public int Id { get; set; }
 
         [StringLength(50)]
+        [Required]
         public string Name { get; set; }
 
         public int BrandId { get; set; }
@@ -118,5 +119,8 @@ namespace Fuelman.Models
 
         [StringLength(5)]        
         public string Unit { get; set; }
+
+        [StringLength(7)]
+        public string Description { get; set; }
     }
 }

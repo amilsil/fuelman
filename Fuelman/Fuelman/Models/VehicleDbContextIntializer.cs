@@ -12,8 +12,9 @@ namespace Fuelman.Models
         {
             // seed data
             // Refill Units 
-            RefillUnit unit = new RefillUnit() { Unit = "l" };
+            RefillUnit unit = new RefillUnit() { Unit = "l", Description = "Litres" };
             dbContext.RefillUnits.Add(unit);
+            dbContext.RefillUnits.Add(new RefillUnit() { Unit = "gal", Description = "Gallons" });
 
             // Brand with several models.
             var toyotaBrand = new Brand() { BrandName = "Toyota" };

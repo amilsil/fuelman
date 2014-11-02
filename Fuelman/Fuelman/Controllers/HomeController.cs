@@ -37,6 +37,11 @@ namespace Fuelman.Controllers
             return View();
         }
 
+        public ActionResult test()
+        {
+            return View();
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";

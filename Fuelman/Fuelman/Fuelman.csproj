@@ -184,6 +184,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\API\BrandController.cs" />
     <Compile Include="Controllers\API\ModelController.cs" />
+    <Compile Include="Controllers\API\RefillUnitController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\API\VehicleController.cs" />
     <Compile Include="DAL\GenericRepository.cs" />
@@ -313,6 +314,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\vehicles.cshtml" />
+    <Content Include="Views\Home\test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

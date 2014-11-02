@@ -1,0 +1,60 @@
+﻿@model Fuelman.Models.Vehicle
+
+@{
+    ViewBag.Title = "test";
+}
+
+<h2>test</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Vehicle</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BrandId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BrandId)
+            @Html.ValidationMessageFor(model => model.BrandId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ModelId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ModelId)
+            @Html.ValidationMessageFor(model => model.ModelId)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RefillUnitId)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RefillUnitId)
+            @Html.ValidationMessageFor(model => model.RefillUnitId)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
