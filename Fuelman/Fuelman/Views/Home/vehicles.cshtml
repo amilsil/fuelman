@@ -61,7 +61,7 @@
                     data-val-number="The field BrandId must be a number." 
                     data-val-required="The BrandId field is required." 
                     id="ModelId" name="ModelId">
-                    <option data-bind="text: ModelName, value: ModelId"></option>
+                    <option data-bind="text: ModelName, value: Id"></option>
                 </select>
             </div>
 
@@ -108,7 +108,7 @@
               $(formElement).validate();
 
               if ($(formElement).valid()) {
-                  $.post(baseUri, $(formElement).serialize(), null, "json")
+                  $.post(self.vehicleApi() , $(formElement).serialize(), null, "json")
                       .done(function (o) {
                           // Add the new product to the view-model.
                           self.vehicles.push(o);
@@ -117,12 +117,12 @@
           }
 
           self.update = function (vehicle) {
-              $.ajax({ type: "PUT", url: baseUri + '/' + vehicle.Id, data: vehicle });
+              $.ajax({ type: "PUT", url: self.vehicleApi() + '/' + vehicle.Id, data: vehicle });
           }
 
           self.remove = function (vehicle) {
               // First remove from the server, then from the view-model.
-              $.ajax({ type: "DELETE", url: baseUri + '/' + vehicle.Id })
+              $.ajax({ type: "DELETE", url: self.vehicleApi()  + '/' + vehicle.Id })
                   .done(function () { self.vehicles.remove(vehicle); });
           }
 
