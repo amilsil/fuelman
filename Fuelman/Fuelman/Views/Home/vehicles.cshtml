@@ -4,89 +4,105 @@
     ViewBag.Title = "vehicles";
 }
 
-<h2>vehicles</h2>
+<h2>Your Vehicles</h2>
+<div id="vehicles-list">
+    <ul data-bind="foreach: vehicles">
+        <li data-bind="click: $root.vehicleClick">
+            <h2 data-bind="text: $data.Name"></h2>
+        
+            <div class="brand-name" data-bind="text: $data.BrandName"></div>
+            <div class="model-name" data-bind="text: $data.ModelName"></div>
 
-<ul id="update-vehicles" data-bind="foreach: vehicles">
-    <li>
-        <div>
-            <div>Name</div>
-            <input type="text" data-bind="value: $data.Name" />
-        </div>
+            <div class="buttons">
+                <input type="button" value="Update" data-bind="click: $root.update" />
+                <input type="button" value="Delete" data-bind="click: $root.remove" />
+            </div>
 
-        <div data-bind="text: $data.BrandName"></div>
-        <div data-bind="text: $data.ModelName"></div>
+        
+        </li>
 
-        <div>
-            <input type="button" value="Update" data-bind="click: $root.update" />
-            <input type="button" value="Delete" data-bind="click: $root.remove" />
-        </div>
-    </li>
-</ul>
-
+    </ul>
+    <div class="refills">
+        <ul data-bind="foreach: refills">
+            <li>
+                <table>
+                    <tr>
+                        <td data-bind="text: $data.RefillDate"></td>
+                        <td data-bind="text: $data.Odometer"></td>
+                        <td data-bind="text: $data.RefillAmount"></td>
+                        <td data-bind="text: $data.IsFullTank"></td>
+                    </tr>
+                </table>
+            </li>
+        </ul>
+    </div>
+</div>
 <div>
-    <h2>Add New Vehicle</h2>
-    <form id="addVehicle" data-bind="submit: create">
-        @Html.ValidationSummary(true)
-        <fieldset>
-            <legend>Vehicle</legend>
-            <div class="editor-label">
-                @Html.LabelFor(model => model.Name)
-            </div>
-            <div class="editor-field">
-                @Html.EditorFor(model => model.Name)
-                @Html.ValidationMessageFor(model => model.Name)
-            </div>
+    <h2>Create New One</h2>
+    <div class="active-form">
+        <form id="addVehicle" data-bind="submit: create">
+            @Html.ValidationSummary(true)
+            <fieldset>
+                <legend>Vehicle</legend>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.Name)
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Name)
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.BrandId)
-            </div>
-            <div class="editor-field">
-                <select
-                    data-bind="foreach: brands, value: selectedBrand"
-                    data-val="true" 
-                    data-val-number="The field BrandId must be a number." 
-                    data-val-required="The BrandId field is required." 
-                    id="BrandId" name="BrandId">
-                    <option data-bind="text: BrandName, value: Id"></option>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.BrandId)
+                </div>
+                <div class="editor-field">
+                    <select
+                        data-bind="foreach: brands, value: selectedBrand"
+                        data-val="true" 
+                        data-val-number="The field BrandId must be a number." 
+                        data-val-required="The BrandId field is required." 
+                        id="BrandId" name="BrandId">
+                        <option data-bind="text: BrandName, value: Id"></option>
                     
-                </select>
-                @Html.ValidationMessageFor(model => model.BrandId)
-            </div>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.BrandId)
+                </div>
             
-            <div class="editor-label">
-                @Html.LabelFor(model => model.ModelId)
-            </div>
-            <div class="editor-field">
-                 <select
-                    data-bind="foreach: models, value: selectedModel"
-                    data-val="true" 
-                    data-val-number="The field BrandId must be a number." 
-                    data-val-required="The BrandId field is required." 
-                    id="ModelId" name="ModelId">
-                    <option data-bind="text: ModelName, value: Id"></option>
-                </select>
-                @Html.ValidationMessageFor(model => model.ModelId)
-            </div>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.ModelId)
+                </div>
+                <div class="editor-field">
+                     <select
+                        data-bind="foreach: models, value: selectedModel"
+                        data-val="true" 
+                        data-val-number="The field BrandId must be a number." 
+                        data-val-required="The BrandId field is required." 
+                        id="ModelId" name="ModelId">
+                        <option data-bind="text: ModelName, value: Id"></option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.ModelId)
+                </div>
 
-            <div class="editor-label">
-                @Html.LabelFor(model => model.RefillUnitId)
-            </div>
-            <div class="editor-field">
-                <select
-                    data-bind="foreach: refillUnits"
-                    data-val="true" 
-                    data-val-number="The field BrandId must be a number." 
-                    data-val-required="The BrandId field is required." 
-                    id="RefillUnitId" name="RefillUnitId">
-                    <option data-bind="text: Description, value: Id"></option>
-                </select>
-                @Html.ValidationMessageFor(model => model.RefillUnitId)
-            </div>
-            <p>
-                <input type="submit" value="Save" />
-            </p>
-        </fieldset>
-    </form>
+                <div class="editor-label">
+                    @Html.LabelFor(model => model.RefillUnitId)
+                </div>
+                <div class="editor-field">
+                    <select
+                        data-bind="foreach: refillUnits"
+                        data-val="true" 
+                        data-val-number="The field BrandId must be a number." 
+                        data-val-required="The BrandId field is required." 
+                        id="RefillUnitId" name="RefillUnitId">
+                        <option data-bind="text: Description, value: Id"></option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.RefillUnitId)
+                </div>
+                <p>
+                    <input type="submit" value="Save" />
+                </p>
+            </fieldset>
+        </form>
+    </div>
 </div>
 
 @section Scripts {
@@ -98,10 +114,12 @@
           var self = this;
           self.brands = ko.observableArray();
           self.models = ko.observableArray();
+          self.refills = ko.observableArray();
           self.refillUnits = ko.observableArray();
+          self.vehicles = ko.observableArray();
+
           self.selectedBrand = ko.observable();
           self.selectedModel = ko.observable();
-          self.vehicles = ko.observableArray();
 
           self.baseUri = '@ViewBag.ApiUrl';
 
@@ -109,6 +127,7 @@
           self.brandApi = function () { return self.baseUri + "/brand"; };
           self.modelsApi = function () { return self.baseUri + "/model"; };
           self.refillUnitApi = function () { return self.baseUri + "/refillunit"; };
+          self.refillApi = function () { return self.baseUri + "/refill"; };
 
           self.computedModels = ko.computed(function () {
               if (self.selectedBrand() == undefined)
@@ -139,6 +158,10 @@
               // First remove from the server, then from the view-model.
               $.ajax({ type: "DELETE", url: self.vehicleApi()  + '/' + vehicle.Id })
                   .done(function () { self.vehicles.remove(vehicle); });
+          }
+
+          self.vehicleClick = function (vehicle) {
+              $.getJSON(self.refillApi() + "?vehicleId=" + vehicle.Id, self.refills);
           }
 
           $.getJSON(self.vehicleApi(), self.vehicles);

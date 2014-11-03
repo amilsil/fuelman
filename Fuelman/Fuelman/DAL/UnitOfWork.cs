@@ -13,6 +13,7 @@ namespace Fuelman.DAL
         private GenericRepository<Brand> brandRepository;
         private GenericRepository<Model> modelRepository;
         private GenericRepository<RefillUnit> refillUnitRepository;
+        private GenericRepository<Refill> refillRespository;
 
         public GenericRepository<Vehicle> VehicleRepository 
         { 
@@ -57,6 +58,18 @@ namespace Fuelman.DAL
                     this.refillUnitRepository = new GenericRepository<RefillUnit>(context);
                 }
                 return this.refillUnitRepository;
+            }
+        }
+
+        public IRepository<Refill> RefillRepository
+        {
+            get
+            {
+                if (this.refillRespository == null)
+                {
+                    this.refillRespository = new GenericRepository<Refill>(context);
+                }
+                return this.refillRespository;
             }
         }
 

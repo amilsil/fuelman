@@ -394,6 +394,37 @@ aside {
     margin: 5px 0 0 10px;
 }
 
+/* vehicles */
+#vehicles-list ul {
+    list-style:none;
+}
+    #vehicles-list li{
+        margin-top:15px;
+        padding:10px;
+        background-color:white;        
+    }
+    #vehicles-list li h2{
+        margin:0px;
+        padding-bottom:10px;
+    }
+    #vehicles-list li .brand-name, #vehicles-list li .model-name{
+        float:left;
+        padding-right:10px;
+        font-size:18px;
+    }
+    #vehicles-list li .buttons {
+        clear:both;
+    }
+    #vehicles-list .refills li {
+        margin:0px 20px;
+        background-color: #ffd800;
+    }
+
+div.active-form {
+    padding:20px;
+    background-color:aqua;
+}
+
 /* forms */
 fieldset {
     border: none;
