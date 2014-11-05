@@ -101,6 +101,7 @@ namespace Fuelman.Models
         public float RefillAmount { get; set; }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTime RefillDate { get; set; }
 
         [Required]

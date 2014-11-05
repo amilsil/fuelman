@@ -17,24 +17,74 @@
                 <input type="button" value="Update" data-bind="click: $root.update" />
                 <input type="button" value="Delete" data-bind="click: $root.remove" />
             </div>
-
-        
         </li>
-
     </ul>
+
     <div class="refills">
-        <ul data-bind="foreach: refills">
-            <li>
-                <table>
-                    <tr>
-                        <td data-bind="text: $data.RefillDate"></td>
-                        <td data-bind="text: $data.Odometer"></td>
-                        <td data-bind="text: $data.RefillAmount"></td>
-                        <td data-bind="text: $data.IsFullTank"></td>
-                    </tr>
-                </table>
-            </li>
-        </ul>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Odometer</th>
+                    <th>Refill Amount ()</th>
+                    <th>Full Tank or Not</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: refills">
+                <tr>
+                    <td data-bind="text: $data.RefillDate"></td>
+                    <td data-bind="text: $data.Odometer"></td>
+                    <td data-bind="text: $data.RefillAmount"></td>
+                    <td data-bind="text: $data.IsFullTank"></td>
+                </tr>                
+            </tbody>
+        </table>
+
+        <form id="refill_form">
+            <fieldset>
+                <legend>New Refill</legend>
+                <div class="editor-label"> Date </div>
+                <input type="text" data-val="true" 
+                        data-val-date="The field Date must be a Date." 
+                        data-val-required="The Date field is required." />
+
+                <div class="editor-label"> Odometer Reading </div>
+                <input type="text" data-val="true" 
+                        data-val-number="The field Odometer Reading must be a number." 
+                        data-val-required="The Odometer Reading field is required." />
+
+                <div class="editor-label"> Refill Amount </div>
+                <input type="text" data-val="true" 
+                        data-val-number="The field Refill Amount must be a number." 
+                        data-val-required="The Refill Amount field is required." />
+
+                <div class="editor-label"> Full tank </div>
+                <select>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+
+            </fieldset>
+        </form>
+    </div>
+
+    <div class="statistics">
+        <table>
+            <thead>
+                <tr>
+                    <th>Fuel</th>
+                    <th>Distance</th>
+                    <th>Economy</th>                    
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: statistics">
+                <tr>
+                    <td data-bind="text: $data.Fuel"></td>
+                    <td data-bind="text: $data.Distance"></td>
+                    <td data-bind="text: $data.Economy"></td>
+                </tr>                
+            </tbody>
+        </table>
     </div>
 </div>
 <div>
@@ -117,6 +167,7 @@
           self.refills = ko.observableArray();
           self.refillUnits = ko.observableArray();
           self.vehicles = ko.observableArray();
+          self.statistics = ko.observableArray(); // vehicle statistics
 
           self.selectedBrand = ko.observable();
           self.selectedModel = ko.observable();
@@ -128,6 +179,7 @@
           self.modelsApi = function () { return self.baseUri + "/model"; };
           self.refillUnitApi = function () { return self.baseUri + "/refillunit"; };
           self.refillApi = function () { return self.baseUri + "/refill"; };
+          self.statApi = function () { return self.baseUri + "/stat"; };
 
           self.computedModels = ko.computed(function () {
               if (self.selectedBrand() == undefined)
@@ -162,11 +214,12 @@
 
           self.vehicleClick = function (vehicle) {
               $.getJSON(self.refillApi() + "?vehicleId=" + vehicle.Id, self.refills);
+              $.getJSON(self.statApi() + "/" + vehicle.Id, self.statistics);
           }
 
           $.getJSON(self.vehicleApi(), self.vehicles);
           $.getJSON(self.brandApi(), self.brands);
-          $.getJSON(self.refillUnitApi(), self.refillUnits);
+          $.getJSON(self.refillUnitApi(), self.refillUnits);          
       }
 
       $(document).ready(function () {

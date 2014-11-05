@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,14 @@ namespace Fuelman
 
             var serializerSettings = GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings;
             serializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+
+            var dateTimeConverter = new IsoDateTimeConverter
+            {
+                DateTimeFormat = "yyyy-MM-dd hh:mm:ss"
+            };
+
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings
+                               .Converters.Add(dateTimeConverter);
             //serializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.None;
             //serializerSettings.NullValueHandling = NullValueHandling.Ignore;
         }

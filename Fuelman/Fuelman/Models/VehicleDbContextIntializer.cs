@@ -41,8 +41,19 @@ namespace Fuelman.Models
             myToyota.Refills.Add(
                 new Refill()
                 {
-                    RefillAmount = 5000.00f,
+                    RefillAmount = 42.00f,
                     Odometer = 1000,
+                    RefillDate = DateTime.Today.AddDays(-10),
+                    IsFullTank = true
+                }
+            );
+
+            // Refill
+            myToyota.Refills.Add(
+                new Refill()
+                {
+                    RefillAmount = 48.00f,
+                    Odometer = 1400,
                     RefillDate = DateTime.Today.AddDays(-5),
                     IsFullTank = true
                 }
@@ -52,8 +63,8 @@ namespace Fuelman.Models
             myToyota.Refills.Add(
                 new Refill()
                 {
-                    RefillAmount = 5000.00f,
-                    Odometer = 1200,
+                    RefillAmount = 50.00f,
+                    Odometer = 1850,
                     RefillDate = DateTime.Today,
                     IsFullTank = true
                 }

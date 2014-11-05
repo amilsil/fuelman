@@ -186,6 +186,7 @@
     <Compile Include="Controllers\API\ModelController.cs" />
     <Compile Include="Controllers\API\RefillController.cs" />
     <Compile Include="Controllers\API\RefillUnitController.cs" />
+    <Compile Include="Controllers\API\StatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\API\VehicleController.cs" />
     <Compile Include="DAL\GenericRepository.cs" />

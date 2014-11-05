@@ -415,9 +415,15 @@ aside {
     #vehicles-list li .buttons {
         clear:both;
     }
-    #vehicles-list .refills li {
-        margin:0px 20px;
-        background-color: #ffd800;
+    #vehicles-list .refills {
+        padding: 12px;
+        margin:0px 0px 0px 40px;
+        background-color: #C5DBE5;
+    }
+    #vehicles-list .statistics {
+        padding: 12px;
+        margin:0px 0px 0px 40px;
+        background-color:  yellowgreen;
     }
 
 div.active-form {
