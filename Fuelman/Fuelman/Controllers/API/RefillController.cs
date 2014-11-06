@@ -22,7 +22,17 @@ namespace Fuelman.Controllers.API
         // GET api/Refill
         public IEnumerable<Refill> GetRefills()
         {
-            var Refills = RefillRepository.Get(null);
+            var queryValues = Request.RequestUri.ParseQueryString();
+            int vehicleId = 0;
+            if (queryValues.Count > 0)
+            {
+                if (queryValues.HasKeys())
+                {
+                    Int32.TryParse(queryValues["vehicleId"], out vehicleId);
+                }
+            }
+
+            var Refills = RefillRepository.Get( r => r.VehicleId == vehicleId);
             return Refills.AsEnumerable();
         }
 

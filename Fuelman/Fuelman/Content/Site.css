@@ -394,37 +394,38 @@ aside {
     margin: 5px 0 0 10px;
 }
 
-/* vehicles */
-#vehicles-list ul {
-    list-style:none;
+/* Tiles */
+#tile-list {
+    margin-right:10px;
 }
-    #vehicles-list li{
-        margin-top:15px;
-        padding:10px;
-        background-color:white;        
+    #tile-list > div{
+        padding:15px;
+    }    
+    #tile-list td, #tile-list th{
+        padding: 5px 10px;
     }
-    #vehicles-list li h2{
+    #tile-list th {
+        text-align: left;
+    }
+    #tile-list td {
+        text-align: right;
+    }
+    #tile-list .refills {
         margin:0px;
-        padding-bottom:10px;
-    }
-    #vehicles-list li .brand-name, #vehicles-list li .model-name{
-        float:left;
-        padding-right:10px;
-        font-size:18px;
-    }
-    #vehicles-list li .buttons {
-        clear:both;
-    }
-    #vehicles-list .refills {
-        padding: 12px;
-        margin:0px 0px 0px 40px;
         background-color: #C5DBE5;
     }
-    #vehicles-list .statistics {
-        padding: 12px;
-        margin:0px 0px 0px 40px;
-        background-color:  yellowgreen;
+    #tile-list .statistics {
+        margin:0px;
+        background-color:  rgb(249, 249, 249);
     }
+
+#vehicle-overview {
+    padding:15px;
+    background-color: white;
+}
+.tile-title {
+    font-size:24px;
+}
 
 div.active-form {
     padding:20px;
