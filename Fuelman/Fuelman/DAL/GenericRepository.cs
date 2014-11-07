@@ -32,7 +32,7 @@ namespace Fuelman.DAL
             {
                 query = query.Where(filter);
             }
-
+                
             foreach (var includeProperty in includeProperties.Split
                 (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {

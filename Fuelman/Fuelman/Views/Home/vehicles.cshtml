@@ -5,17 +5,17 @@
 }
 
 <h2>Your Vehicles</h2>
-<div id="tile-list">
+<div id="tile_list">
     <select data-bind="options: vehicles,
     optionsText: 'Name',
     value: selectedVehicle"></select>
     
     <span>
-        <button data-bind="click: function () { isCreateNew(true); }">New!</button>
+        <button data-bind="click: function () { isCreateNewVehicle(true); }">New!</button>
     </span>
     
     <!-- vehicle-overview -->
-    <div id="vehicle-overview" data-bind="if: selectedVehicle, visible: selectedVehicle">
+    <div class="vehicle-overview" data-bind="if: selectedVehicle, visible: selectedVehicle">
         <div class="tile-title">
             <span class="brand" data-bind="text: selectedVehicle().Name"></span>
             (<span class="brand" data-bind="text: selectedVehicle().BrandName"></span>
@@ -27,7 +27,7 @@
     </div> <!-- vehicle-overview -->
 
     <!--new vehicle-form-->
-    <div class="active-form" data-bind="visible: isCreateNew">
+    <div class="vehicle-form" data-bind="visible: isCreateNewVehicle">
         <div class="tile-title">Create New One</div>
         <div>
             <form id="addVehicle" data-bind="submit: create">
@@ -89,7 +89,7 @@
                     </div>
                     <p>
                         <input type="submit" value="Save" />
-                        <input type="button" value="Cancel" data-bind="click: function () { isCreateNew(false); }" />
+                        <input type="button" value="Cancel" data-bind="click: function () { isCreateNewVehicle(false); }" />
                     </p>
                 </fieldset>
             </form>
@@ -97,48 +97,67 @@
     </div> <!--new vehicle-form-->
 
     <!-- statistics -->
-    <div class="statistics" data-bind="if: selectedVehicle(), visible: statisticsVisible()">
+    <div class="statistics">
         <div class="tile-title"> Statistics </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Fuel</th>
-                    <th>Distance</th>
-                    <th>Economy</th>                    
-                </tr>
-            </thead>
-            <tbody data-bind="foreach: statistics()">
-                <tr>
-                    <td data-bind="text: $data.Fuel"></td>
-                    <td data-bind="text: $data.Distance"></td>
-                    <td data-bind="text: $data.Economy"></td>
-                </tr>                
-            </tbody>
-        </table>
+        <div data-bind="visible: statisticsVisible()">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fuel</th>
+                        <th>Distance</th>
+                        <th>Economy</th>                    
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: statistics()">
+                    <tr>
+                        <td data-bind="text: $data.Fuel"></td>
+                        <td data-bind="text: $data.Distance"></td>
+                        <td data-bind="text: $data.Economy"></td>
+                    </tr>                
+                </tbody>
+            </table>
+
+            <div id="chart_container">
+                <canvas id="chart_canvas"></canvas>
+            </div>
+        </div>
+        <div data-bind="visible: !statisticsVisible()">
+            <span class="info">More refill records you add, the prettier the statistics get. Don't overkill though. :)</span>
+        </div>
     </div> <!-- statistics -->
 
     <!-- refills -->
-    <div class="refills" data-bind="visible: selectedVehicle">
+    <div class="refills">
         <div class="tile-title">Refill History</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Odometer</th>
-                    <th>Refill Amount()</th>
-                    <th>Full Tank or Not</th>
-                </tr>
-            </thead>
-            <tbody data-bind="foreach: refills()">
-                <tr>
-                    <td data-bind="text: $data.RefillDate"></td>
-                    <td data-bind="text: $data.Odometer"></td>
-                    <td data-bind="text: $data.RefillAmount"></td>
-                    <td data-bind="text: $data.IsFullTank"></td>
-                </tr>                
-            </tbody>
-        </table>
+        <div data-bind="visible: refills().length > 0">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Odometer</th>
+                        <th>Refill Amount()</th>
+                        <th>Full Tank or Not</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: refills()">
+                    <tr>
+                        <td data-bind="text: $data.RefillDate"></td>
+                        <td data-bind="text: $data.Odometer"></td>
+                        <td data-bind="text: $data.RefillAmount"></td>
+                        <td data-bind="text: $data.IsFullTank"></td>
+                    </tr>                
+                </tbody>
+            </table>
+        </div>
+        <div data-bind="visible: refills().length < 1">
+            <span class="info">You haven't added a refill yet. <br /> Add one now. :) </span>
+        </div>
+        <button data-bind="click: function () { isCreateNewRefill(true); }">New Refill!</button>
+    </div> <!-- refills -->
 
+    <!-- refill-form -->
+    <div class="refill-form" data-bind="visible: isCreateNewRefill()"> 
+        <div class="tile-title">New Refill</div>
         <form id="refill_form">
             <fieldset>
                 <legend>New Refill</legend>
@@ -162,17 +181,21 @@
                     <option value="1">Yes</option>
                     <option value="0">No</option>
                 </select>
-
             </fieldset>
-        </form> <!-- refill_form -->
-    </div> <!-- refills -->
-
+            
+            <p>
+                <input type="submit" value="Save" />
+                <input type="button" value="Cancel" data-bind="click: function () { isCreateNewRefill(false); }" />
+            </p>
+        </form> 
+    </div> <!-- refill_form -->
 </div>
 
 
 @section Scripts {
   @Scripts.Render("~/bundles/jqueryval")
   <script type="text/javascript" src="@Url.Content("~/Scripts/knockout-2.2.0.js")"></script> 
+  <script type="text/javascript" src="@Url.Content("~/Scripts/Chart.js")"></script> 
   <script type="text/javascript">
     
       var getKeys = function (obj) {
@@ -198,7 +221,8 @@
           self.selectedBrand = ko.observable();
           self.selectedModel = ko.observable();
           
-          self.isCreateNew = ko.observable(false);
+          self.isCreateNewVehicle = ko.observable(false);
+          self.isCreateNewRefill = ko.observable(false);
 
           self.baseUri = '@ViewBag.ApiUrl';
 
@@ -251,13 +275,51 @@
               if (self.selectedVehicle() != undefined) {
                   $.getJSON(self.statApi() + "/" + self.selectedVehicle().Id, self.statistics);
                   $.getJSON(self.refillApi() + "?vehicleId=" + self.selectedVehicle().Id, self.refills);
+
+                  // Draw the chart.
+                  var ctx = document.getElementById("chart_canvas").getContext("2d");
+
+                  ctx.canvas.width = $("#tile_list").innerWidth() - 100;
+                  ctx.canvas.height = 300;
+                  window.myLine = new Chart(ctx).Line(lineChartData, {
+                      responsive: false
+                  });
               }
+
               return self.statistics;
           });
 
           $.getJSON(self.vehicleApi(), self.vehicles);
           $.getJSON(self.brandApi(), self.brands);
           $.getJSON(self.refillUnitApi(), self.refillUnits);
+      }
+
+      // Chart stuff
+      var randomScalingFactor = function () { return Math.round(Math.random() * 100) };
+      var lineChartData = {
+          labels: ["January", "February", "March", "April", "May", "June", "July"],
+          datasets: [
+              {
+                  label: "My First dataset",
+                  fillColor: "rgba(220,220,220,0.2)",
+                  strokeColor: "rgba(220,220,220,1)",
+                  pointColor: "rgba(220,220,220,1)",
+                  pointStrokeColor: "#fff",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(220,220,220,1)",
+                  data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+              },
+              {
+                  label: "My Second dataset",
+                  fillColor: "rgba(151,187,205,0.2)",
+                  strokeColor: "rgba(151,187,205,1)",
+                  pointColor: "rgba(151,187,205,1)",
+                  pointStrokeColor: "#fff",
+                  pointHighlightFill: "#fff",
+                  pointHighlightStroke: "rgba(151,187,205,1)",
+                  data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+              }
+          ]
       }
 
       $(document).ready(function () {

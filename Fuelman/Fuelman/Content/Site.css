@@ -395,42 +395,51 @@ aside {
 }
 
 /* Tiles */
-#tile-list {
+#tile_list {
     margin-right:10px;
 }
-    #tile-list > div{
+    #tile_list > div{
         padding:15px;
-    }    
-    #tile-list td, #tile-list th{
+        transition: all 2s;
+    }
+    #tile_list table {
+        margin-bottom:12px;
+    }
+    #tile_list td, #tile_list th{
         padding: 5px 10px;
     }
-    #tile-list th {
+    #tile_list th {
         text-align: left;
     }
-    #tile-list td {
+    #tile_list td {
         text-align: right;
     }
-    #tile-list .refills {
-        margin:0px;
-        background-color: #C5DBE5;
+    #tile_list .tile-title {
+        font-size:24px;
     }
-    #tile-list .statistics {
+    #tile_list .info   {
+        margin: 15px 0px;
+        display:block;
+    }
+    #tile_list .refills {
+        margin:0px;
+        background-color: #E0E0E0;
+    }
+    #tile_list .statistics {
         margin:0px;
         background-color:  rgb(249, 249, 249);
     }
-
-#vehicle-overview {
-    padding:15px;
-    background-color: white;
-}
-.tile-title {
-    font-size:24px;
-}
-
-div.active-form {
-    padding:20px;
-    background-color:aqua;
-}
+    #tile_list .vehicle-overview {
+        padding:15px;
+        background-color: white;
+    }
+    #tile_list .vehicle-form {
+        background-color:aqua;
+    }
+    #tile_list .refill-form {
+        background-color: aqua;
+    }
+    
 
 /* forms */
 fieldset {
