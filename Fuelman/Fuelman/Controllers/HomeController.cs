@@ -21,9 +21,9 @@ namespace Fuelman.Controllers
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
-            Database.SetInitializer<VehicleDbContext>(new VehicleDbContextInitializer());
-            VehicleDbContext db = new VehicleDbContext();
-            db.Database.Initialize(true);
+            //Database.SetInitializer<VehicleDbContext>(new VehicleDbContextInitializer());
+            //VehicleDbContext db = new VehicleDbContext();
+            //db.Database.Initialize(true);
 
             return View();
         }
@@ -39,20 +39,6 @@ namespace Fuelman.Controllers
 
         public ActionResult test()
         {
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

@@ -2,4 +2,37 @@
     ViewBag.Title = "Home Page";
 }
 
+<div ng-app="root">
+    <div ng-controller="VehicleController" id="tile_list">
+        
+        <div>
+            <select ng-model="selectedVehicle" ng-options="vehicle.name for vehicle in vehicles">
+                
+            </select>        
+        </div>
 
+        <!-- vehicle-overview -->
+        <div class="vehicle-overview" ng-show="selectedVehicle">
+            <div class="tile-title">
+                <span class="brand">{{selectedVehicle.name}}</span>                
+                (<span class="model">{{selectedVehicle.brand}} {{selectedVehicle.model}}</span>)
+            </div>            
+        </div> <!-- vehicle-overview -->
+
+        <div class="vehicle-form">
+            <form>
+                <div class="editor-label">Name</div> 
+                <div class="editor-field"> <input ng-model="newVehicle.name" type="text" name="name" id="name" /> </div>
+                <div class="editor-label">Brand</div> 
+                <select ng-model="newVehicle.brand" ng-options="brand.name for brand in brands"></select>
+                <div class="editor-label">Model</div> 
+                <select ng-model="newVehicle.model" ng-options="model.name for model in models"></select>
+                <p>
+                    <input type="submit" ng-click="save()" value="Add" />
+                    <input type="button" value="Cancel" />
+                </p>
+            </form>
+        </div>
+
+    </div>
+</div>
