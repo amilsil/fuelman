@@ -197,6 +197,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\BoolJsonConverter.cs" />
     <Compile Include="Models\IBaseEntity.cs" />
     <Compile Include="Models\FuelEconomyCalculator.cs" />
     <Compile Include="Models\VehicleDbContext.cs" />

@@ -36,6 +36,10 @@ namespace Fuelman
 
             GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings
                                .Converters.Add(dateTimeConverter);
+
+            GlobalConfiguration.Configuration.Services.RemoveAll(
+                typeof(System.Web.Http.Validation.ModelValidatorProvider),
+                v => v is System.Web.Http.Validation.Providers.InvalidModelValidatorProvider);
             //serializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.None;
             //serializerSettings.NullValueHandling = NullValueHandling.Ignore;
         }

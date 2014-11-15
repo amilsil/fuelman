@@ -77,7 +77,7 @@ namespace Fuelman.Models
         [Required]
         public string BrandName { get; set; }
 
-        public virtual ICollection<Model> Models { get; set; }
+        public ICollection<Model> Models { get; set; }
     }
 
     public class Model : IBaseEntity
@@ -108,6 +108,7 @@ namespace Fuelman.Models
         public long Odometer { get; set; }
 
         [Required]
+        [JsonConverter(typeof(BoolJsonConverter))]
         public bool IsFullTank { get; set; }
 
         public int VehicleId { get; set; }

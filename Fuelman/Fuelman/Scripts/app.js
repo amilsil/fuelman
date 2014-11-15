@@ -1,68 +1,215 @@
-﻿var app = angular.module('root', []);
+﻿var app = angular.module("fuelman", []);
 
-/* Vehicle service to get the vehicles */
-app.service("VehicleService", [function () {
-    var vehicles = [
-            { id: 1, name: 'MyToyota', brand: 'Toyota', model: 'Vios', year: '1997'},
-            { id: 2, name: 'MyVitz', brand: 'Toyota', model: 'Vitz', year: '2007' }
-    ];
+app.service("VehicleService", ["$http", function ($http) {
+    // arrays to hold data.
+    var vehicles = [];
+    var brands = [];
+    var models = [];
+    var refills = [];
+    var refillUnits = [];
+    var statistics = [];
 
     var count = vehicles.length;
 
+    // Adders..
+    this.addVehicle = function (v) {
+        $http.post('/api/vehicle', JSON.stringify(v))
+            .success(function (data, status, headers, config) {
+                alert(data);
+            });
+
+        vehicles.push(v);
+        return v.id;
+    };
+
+    this.addRefill = function (r) {
+        $http.post('/api/refill?vehicleId=' + r.VehicleId, JSON.stringify(r))
+            .success(function (data, status, headers, config) {
+                alert(data);
+            });
+
+        //refills.push(r);
+    };
+
+    // Getters..
     this.getVehicles = function () {
+
+        $http.get('/api/vehicle')
+            .success(function (data, status, headers, config) {
+                $.each(data, function () {
+                    vehicles.push(this);
+                });
+            })
+            .error(function (data, status, headers, config) {
+                // what to do if no data?
+            });
+
         return vehicles;
     };
-
-    this.addVehicle = function (v) {
-        v.id = ++count;
-        vehicles.push(v);
-    };
-
+    
     this.getBrands = function () {
-        return [
-            { id: 1, name: 'Toyota' },
-            { id: 2, name: 'Nissan' }
-        ];
+        $http.get('/api/brand')
+            .success(function (data, status, headers, config) {
+                $.each(data, function () {
+                    brands.push(this);
+                });
+            })
+            .error(function (data, status, headers, config) {
+                // what to do if no data?
+            });
+
+        return brands;
     };
 
-    this.getModels = function () {
-        return [
-            { id: 1, name: 'Vitz' },
-            { id: 2, name: 'Vios' },
-            { id: 3, name: 'FB15' },
-            { id: 4, name: 'Vezel' },
-            { id: 5, name: 'Fit' }
-        ];
+    this.getModels = function (brandId) {
+        $http.get('/api/model?brand=' + brandId)
+            .success(function (data, status, headers, config) {
+                $.each(data, function () {
+                    models.push(this);
+                });
+            })
+            .error(function (data, status, headers, config) {
+                // what to do if no data?
+            });
+
+        return models;
+    };
+
+    this.getRefills = function (vehicleId) {
+        $http.get('/api/refill?vehicleId=' + vehicleId)
+            .success(function (data, status, headers, config) {
+                $.each(data, function () {
+                    refills.push(this);
+                });
+            })
+            .error(function (data, status, headers, config) {
+                // what to do if no data?
+            });
+
+        return refills;
+    };
+
+    this.getRefillUnits = function () {
+        $http.get('/api/refillunit')
+            .success(function (data, status, headers, config) {
+                $.each(data, function () {
+                    refillUnits.push(this);
+                });
+            })
+            .error(function (data, status, headers, config) {
+                // what to do if no data?
+            });
+
+        return refillUnits;
+    };
+
+    this.getStatistics = function (vehicleId) {
+        statistics.length = 0; // clear the statistics.
+        $http.get('/api/stat/' + vehicleId)
+            .success(function (data, status, headers, config) {                
+                $.each(data, function () {                    
+                    statistics.push(this);
+                });
+            })
+            .error(function (data, status, headers, config) {
+                // what to do if no data?
+            });
+
+        return statistics;
     };
 
 }]);
 
+
 /* Vehicle Controller */
-app.controller("VehicleController", ["$scope", "VehicleService", function ($scope, VehicleService) {
+app.controller("VehicleController", ["$scope", "$filter", "VehicleService", function ($scope, $filter, VehicleService) {
     $scope.vehicles = [];
-    $scope.brands = [];
+    $scope.brands = []; 
     $scope.models = [];
+    $scope.refills = [];
+    $scope.refillUnits = [];
+    $scope.statistics = [];
 
     $scope.selectedVehicle = null;
+
+    // form data
     $scope.newVehicle = {};
+    $scope.newRefill = {};
+
+    // bools.
+    $scope.isCreateNewVehicle = false;
+    $scope.isCreateNewRefill = false;    
 
     init();
 
     function init() {
         $scope.vehicles = VehicleService.getVehicles();
-        $scope.selectedVehicle = $scope.vehicles[0];
-
         $scope.brands = VehicleService.getBrands();
-        $scope.models = VehicleService.getModels();
+        $scope.refillUnits = VehicleService.getRefillUnits();
     }
 
+    $scope.startCreateNewRefill = function () { $scope.isCreateNewRefill = true; };
+    $scope.cancelCreateNewRefill = function () { $scope.isCreateNewRefill = false; };
+
+    $scope.createNewVehicle = function() { $scope.isCreateNewVehicle = true; };
+    $scope.cancelCreateNewVehicle = function() { $scope.isCreateNewVehicle = false; }
+  
     $scope.getVehicleTitle = function () {
         if ($scope.selectedVehicle) {
             return $scope.selectedVehicle.name;
         }
     };
 
-    $scope.save = function () {
-        VehicleService.addVehicle($scope.newVehicle);
+    // Saving logic
+    $scope.saveRefill = function () {
+        var refill = {
+            RefillDate: $filter('date')(new Date($scope.newRefill.RefillDate), "yyyy-MM-ddTHH:mm:ss"),
+            Odometer:       $scope.newRefill.Odometer,
+            RefillAmount:   $scope.newRefill.RefillAmount,
+            IsFullTank:     $scope.newRefill.IsFullTank,
+            VehicleId:      $scope.selectedVehicle.Id
+        };
+
+        VehicleService.addRefill(refill);
+
+        $scope.newRefill = {};
+        $scope.isCreateNewRefill = false;
     };
+
+    $scope.saveVehicle = function () {
+        var vehicle = {
+            Name: $scope.newVehicle.Name,
+            BrandId: $scope.newVehicle.Brand.Id,
+            ModelId: $scope.newVehicle.Model.Id,
+            BrandName:$scope.newVehicle.Brand.BrandName,
+            ModelName: $scope.newVehicle.Model.ModelName,
+            RefillUnitId: $scope.newVehicle.RefillUnit.Id
+        };
+      
+        VehicleService.addVehicle(vehicle);
+        
+        $scope.newVehicle = {};
+        $scope.isCreateNewVehicle = false;
+        $scope.selectedVehicle = vehicle;
+    };
+
+    // When the selected vehicle changes..
+    $scope.$watch('selectedVehicle', function (newValue, oldValue) {
+        if (newValue != undefined && newValue.Id != undefined) {
+            // Reset and load the dependent arrays.
+            $scope.statistics.length = 0;
+            $scope.statistics = VehicleService.getStatistics(newValue.Id);
+
+            $scope.refills.length = 0;
+            $scope.refills = VehicleService.getRefills(newValue.Id);
+        }
+    });
+
+    // When the brand changes..
+    $scope.$watch('newVehicle.Brand', function (newValue, oldValue) {
+        if (newValue != undefined && newValue.Id != undefined) {
+            $scope.models.length = 0;
+            $scope.models = VehicleService.getModels(newValue.Id);
+        }
+    });
 }]);
