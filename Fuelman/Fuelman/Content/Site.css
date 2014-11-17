@@ -423,7 +423,7 @@ aside {
     }
     #tile_list .refills {
         margin:0px;
-        background-color: #E0E0E0;
+        background-color: rgb(249, 249, 249);
     }
     #tile_list .statistics {
         margin:0px;
@@ -439,7 +439,21 @@ aside {
     #tile_list .refill-form {
         background-color: aqua;
     }
-    
+
+/* A refill */    
+.refill {
+  padding:15px;
+  background: #fff;
+  margin:5px 0px;
+}
+.refill > .date {
+  margin: 0px 0px 8px 0px;
+  font-size:1.7em;  
+}
+.refill > .details > span {
+  margin: 0px 10px 0px 0px;
+  font-size: 1.3em;
+}
 
 /* forms */
 fieldset {
