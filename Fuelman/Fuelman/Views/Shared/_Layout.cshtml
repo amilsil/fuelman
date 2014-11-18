@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="~/Content/themes/default/bootstrap.css" rel="stylesheet">
+    @Styles.Render("~/Content/site.css")
 
     @Html.Partial("_html5shiv")
 
@@ -22,10 +23,10 @@
 
     @RenderSection("featured", required: false)
 
-    <div class="body">
+    <div class="page">
         @RenderBody()
         <hr />
-        <div class="footer">
+        <div class="footer container">
             <p>&copy; Company 2013</p>
         </div>
     </div>

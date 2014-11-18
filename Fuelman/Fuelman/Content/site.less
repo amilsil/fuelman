@@ -1,0 +1,55 @@
+﻿@page-bg: #EFEFEF;
+@base-font: segoe ui;
+@base-font-color: #333333;
+@sidebar-bg: #F8F8F8;
+@button-active: #CF472D;
+@button-inactive: #E5EAEE;
+@title-font-color: #555555;
+
+.center { text-align: center }
+
+.page {
+    margin-top: 45px;
+}
+body {
+  font-family: @base-font;
+  color: @base-font-color;
+  background-color: @page-bg;
+}
+
+.sidebar {
+  float:left;
+  padding:20px;
+  border-radius: 3px;
+  background-color: @sidebar-bg;  
+  box-shadow:0px 0px 3px #aaa, inset 0px 4px 2px #fff;
+  
+  
+  h3 {
+    color: @title-font-color;
+    margin: 10px;
+    font-size:1.6em;
+  }
+  
+  ul.cars {
+    list-style: none;
+    padding:15px 0px;
+    margin:0px;
+    
+    li {
+      padding: 8px 10px;
+      margin:4px 0px;
+      border-radius:3px;
+    }
+    li.selected {
+      background-color: @button-active;      
+    }
+  }
+  
+  .big-number {
+    font-weight:bold;
+    font-size: 2em;
+    text-align: center;
+    color: #222;
+  }
+}

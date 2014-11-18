@@ -144,6 +144,10 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
 
     function init() {
         $scope.vehicles = VehicleService.getVehicles();
+
+        if($scope.vehicles.length > 0)
+            $scope.selectedVehicle = $scope.vehicles[0];
+
         $scope.brands = VehicleService.getBrands();
         $scope.refillUnits = VehicleService.getRefillUnits();
     }
@@ -193,6 +197,10 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
         $scope.selectedVehicle = vehicle;
     };
 
+    $scope.selectThisVehicle = function (vehicle) {
+        $scope.selectedVehicle = vehicle;
+    };
+
     // When the selected vehicle changes..
     $scope.$watch('selectedVehicle', function (newValue, oldValue) {
         if (newValue != undefined && newValue.Id != undefined) {
@@ -212,4 +220,12 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
             $scope.models = VehicleService.getModels(newValue.Id);
         }
     });
+
+    // Css
+    $scope.cssVehicleListItem = function (vehicle) {
+        if ($scope.selectedVehicle == vehicle)
+            return "selected";
+        else
+            return "";
+    }
 }]);
