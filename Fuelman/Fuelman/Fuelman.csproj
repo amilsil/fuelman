@@ -414,8 +414,8 @@
     </Content>
     <Content Include="Views\Home\vehicles.cshtml" />
     <Content Include="Views\Home\test.cshtml" />
-    <Content Include="Views\Shared\_html5shiv.cshtml" />
     <Content Include="Views\Shared\_NavBar.cshtml" />
+    <Content Include="Views\Shared\_html5shiv.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
