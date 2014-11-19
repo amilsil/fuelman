@@ -5,26 +5,29 @@
 @section featured {
 
 }
+
 <div data-ng-app="fuelman">
     <!-- two row layout -->
-    <div class="row" data-ng-controller="VehicleController">
-        <div class="container">
+    <div class="container">
+        <div class="row" data-ng-controller="VehicleController">
             <!-- sidebar: list of vehicles -->
-            <div class="col-md-2 sidebar">
-                <h3 class="center"> Cars </h3>
-                <div class='big-number'>34,566 km</div>
-                <ul class='cars' data-ng-repeat="vehicle in vehicles">
-                    <li data-ng-click="selectThisVehicle(vehicle)" data-ng-class="cssVehicleListItem(vehicle)">{{vehicle.Name}}</li>
-                </ul>
-                <div class="center">
-                    <button data-ng-click='createNewVehicle()'>New</button>
+            <div class="col-md-3">
+                <div class="sidebar">
+                    <h3 class="center"> Cars </h3>
+                    <div class='big-number'>34,566 km</div>
+                    <ul class='cars'>
+                        <li data-ng-repeat="vehicle in vehicles" data-ng-click="selectThisVehicle(vehicle)" data-ng-class="cssVehicleListItem(vehicle)">{{vehicle.Name}}</li>
+                    </ul>
+                    <div class="center">
+                        <button data-ng-click='createNewVehicle()'>New</button>
+                    </div>
                 </div>
             </div> <!-- end sidebar -->
-
             <!-- dashboard -->
-            <div class="col-md-8">
+            <div class="col-md-9 dashboard">
+
                 <!-- vehicle-overview -->
-                <div class="vehicle-overview">
+                <div class="tile vehicle-overview">
                     <div class="tile-title">
                         <span class="brand">{{selectedVehicle.Name}}</span>
                         (<span class="model">{{selectedVehicle.BrandName}} {{selectedVehicle.ModelName}}</span>)
@@ -32,7 +35,7 @@
                 </div> <!-- vehicle-overview -->
 
                 <!-- vehicle-form -->
-                <div class="vehicle-form" data-ng-show="isCreateNewVehicle">
+                <div class="tile form" data-ng-show="isCreateNewVehicle">
                     <form>
                         <div class="editor-label">Name</div>
                         <div class="editor-field"> <input data-ng-model="newVehicle.Name" type="text" name="name" id="name" /> </div>
@@ -49,7 +52,7 @@
                     </form>
                 </div> <!-- vehicle-form -->
                 <!-- statistics -->
-                <div class="statistics" data-ng-show="selectedVehicle">
+                <div class="tile statistics" data-ng-show="selectedVehicle">
                     <div class="tile-title"> Statistics </div>
                     <div data-ng-show="statistics.length > 0">
                         <table>
@@ -70,15 +73,15 @@
                         </table>
 
                         @*<div id="chart_container">
-                    <canvas id="chart_canvas"></canvas>
-                </div>*@
+                            <canvas id="chart_canvas"></canvas>
+                            </div>*@
                     </div>
                     <div data-ng-show="statistics.length ===  0">
                         <span class="info">More refill records you add, the prettier the statistics get. Don't overkill though. :)</span>
                     </div>
                 </div> <!-- statistics -->
                 <!-- refills -->
-                <div class="refills">
+                <div class="tile refills">
                     <div class="tile-title">Refill History</div>
                     <div class='refill' data-ng-repeat="refill in refills">
                         <div class='date'>{{refill.RefillDate}}</div>
@@ -96,7 +99,7 @@
                     </p>
                 </div> <!-- refills -->
                 <!-- refill-form -->
-                <div class="refill-form" data-ng-show="isCreateNewRefill">
+                <div class="tile form" data-ng-show="isCreateNewRefill">
                     <div class="tile-title">New Refill</div>
                     <form id="refill_form">
                         <fieldset>

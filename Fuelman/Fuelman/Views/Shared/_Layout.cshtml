@@ -23,12 +23,9 @@
 
     @RenderSection("featured", required: false)
 
-    <div class="page">
+    <div class="page container">
         @RenderBody()
         <hr />
-        <div class="footer container">
-            <p>&copy; Company 2013</p>
-        </div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

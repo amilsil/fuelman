@@ -18,28 +18,29 @@ body {
 }
 
 .sidebar {
-  float:left;
   padding:20px;
-  border-radius: 3px;
+  border-radius: 3px;  
+  margin-bottom: 15px;
   background-color: @sidebar-bg;  
-  box-shadow:0px 0px 3px #aaa, inset 0px 4px 2px #fff;
-  
+  box-shadow:0 0 3px #aaa, inset 0 4px 2px #fff;  
   
   h3 {
     color: @title-font-color;
     margin: 10px;
-    font-size:1.6em;
+    font-size:2em;
   }
   
   ul.cars {
     list-style: none;
-    padding:15px 0px;
-    margin:0px;
+    padding:15px 0;
+    margin:0;
     
     li {
       padding: 8px 10px;
-      margin:4px 0px;
+      margin: 4px 0;
       border-radius:3px;
+      font-weight: bold;
+      font-size: 1.2em;
     }
     li.selected {
       background-color: @button-active;      
@@ -52,4 +53,24 @@ body {
     text-align: center;
     color: #222;
   }
+}
+
+.dashboard {
+    .tile {
+        padding: 15px;
+        background-color: #fff;
+        box-shadow:0 0 3px #aaa, inset 0 4px 2px #fff;
+        margin-bottom: 20px;
+        border-radius: 3px;
+
+        .tile-title {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 10px;
+        }       
+    }
+   .info {
+       padding: 10px 0;
+       font-size: 3em;
+   }
 }
