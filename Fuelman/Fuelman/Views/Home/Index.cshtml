@@ -19,12 +19,30 @@
                         <li data-ng-repeat="vehicle in vehicles" data-ng-click="selectThisVehicle(vehicle)" data-ng-class="cssVehicleListItem(vehicle)">{{vehicle.Name}}</li>
                     </ul>
                     <div class="center">
-                        <button data-ng-click='createNewVehicle()'>New</button>
+                        <button class='btn btn-primary' data-ng-click='createNewVehicle()'>New</button>
                     </div>
                 </div>
             </div> <!-- end sidebar -->
             <!-- dashboard -->
             <div class="col-md-9 dashboard">
+
+                <!-- vehicle-form -->
+                <div class="tile form" data-ng-show="isCreateNewVehicle">
+                    <form>
+                        <label class="col-sm-2 control-label">Name</label>
+                        <div class="editor-field"> <input class="form-control" data-ng-model="newVehicle.Name" type="text" name="name" id="name" /> </div>
+                        <label class="col-sm-2 control-label">Brand</label>
+                        <select class="form-control" data-ng-model="newVehicle.Brand" data-ng-options="brand.BrandName for brand in brands"></select>
+                        <label class="col-sm-2 control-label">Model</label>
+                        <select class="form-control" data-ng-model="newVehicle.Model" data-ng-options="model.ModelName for model in models"></select>
+                        <label class="col-sm-2 control-label">Refill Unit</label>
+                        <select class="form-control" data-ng-model="newVehicle.RefillUnit" data-ng-options="unit.Description for unit in refillUnits"></select>
+                        <p>
+                            <input type="submit" data-ng-click="saveVehicle()" value="Add" class="btn btn-primary" />
+                            <input type="button" value="Cancel" data-ng-click='cancelCreateNewVehicle()' class="btn" />
+                        </p>
+                    </form>
+                </div> <!-- vehicle-form -->
 
                 <!-- vehicle-overview -->
                 <div class="tile vehicle-overview">
@@ -32,54 +50,39 @@
                         <span class="brand">{{selectedVehicle.Name}}</span>
                         (<span class="model">{{selectedVehicle.BrandName}} {{selectedVehicle.ModelName}}</span>)
                     </div>
-                </div> <!-- vehicle-overview -->
+                    <!-- statistics -->
+                    <div class="statistics" data-ng-show="selectedVehicle">
+                        <div class="tile-title"> Statistics </div>
+                        <div data-ng-show="statistics.length > 0">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Fuel</th>
+                                        <th>Distance</th>
+                                        <th>Economy</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-ng-repeat="stat in statistics">
+                                    <tr>
+                                        <td>{{stat.Fuel}}</td>
+                                        <td>{{stat.Distance}}</td>
+                                        <td>{{stat.Economy}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
-                <!-- vehicle-form -->
-                <div class="tile form" data-ng-show="isCreateNewVehicle">
-                    <form>
-                        <div class="editor-label">Name</div>
-                        <div class="editor-field"> <input data-ng-model="newVehicle.Name" type="text" name="name" id="name" /> </div>
-                        <div class="editor-label">Brand</div>
-                        <select data-ng-model="newVehicle.Brand" data-ng-options="brand.BrandName for brand in brands"></select>
-                        <div class="editor-label">Model</div>
-                        <select data-ng-model="newVehicle.Model" data-ng-options="model.ModelName for model in models"></select>
-                        <div class="editor-label">Refill Unit</div>
-                        <select data-ng-model="newVehicle.RefillUnit" data-ng-options="unit.Description for unit in refillUnits"></select>
-                        <p>
-                            <input type="submit" data-ng-click="saveVehicle()" value="Add" />
-                            <input type="button" value="Cancel" data-ng-click='cancelCreateNewVehicle()' />
-                        </p>
-                    </form>
-                </div> <!-- vehicle-form -->
-                <!-- statistics -->
-                <div class="tile statistics" data-ng-show="selectedVehicle">
-                    <div class="tile-title"> Statistics </div>
-                    <div data-ng-show="statistics.length > 0">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Fuel</th>
-                                    <th>Distance</th>
-                                    <th>Economy</th>
-                                </tr>
-                            </thead>
-                            <tbody data-ng-repeat="stat in statistics">
-                                <tr>
-                                    <td>{{stat.Fuel}}</td>
-                                    <td>{{stat.Distance}}</td>
-                                    <td>{{stat.Economy}}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        @*<div id="chart_container">
+                            @*<div id="chart_container">
                             <canvas id="chart_canvas"></canvas>
                             </div>*@
-                    </div>
-                    <div data-ng-show="statistics.length ===  0">
-                        <span class="info">More refill records you add, the prettier the statistics get. Don't overkill though. :)</span>
-                    </div>
-                </div> <!-- statistics -->
+                        </div>
+                        <div data-ng-show="statistics.length ===  0">
+                            <span class="info">More refill records you add, the prettier the statistics get. Don't overkill though. :)</span>
+                        </div>
+                    </div> <!-- statistics -->
+                </div> <!-- vehicle-overview -->
+
+               
+                
                 <!-- refills -->
                 <div class="tile refills">
                     <div class="tile-title">Refill History</div>
@@ -104,25 +107,25 @@
                     <form id="refill_form">
                         <fieldset>
                             <legend>New Refill</legend>
-                            <div class="editor-label"> Date </div>
+                            <label class="col-sm-2 control-label"> Date </label>
                             <input type="text" data-val="true"
                                    data-ng-model="newRefill.RefillDate"
                                    data-val-date="The field Date must be a Date."
                                    data-val-required="The Date field is required." />
 
-                            <div class="editor-label"> Odometer Reading </div>
+                            <label class="col-sm-2 control-label"> Odometer Reading </label>
                             <input type="text" data-val="true"
                                    data-ng-model="newRefill.Odometer"
                                    data-val-number="The field Odometer Reading must be a number."
                                    data-val-required="The Odometer Reading field is required." />
 
-                            <div class="editor-label"> Refill Amount </div>
+                            <label class="col-sm-2 control-label"> Refill Amount </label>
                             <input type="text" data-val="true"
                                    data-ng-model="newRefill.RefillAmount"
                                    data-val-number="The field Refill Amount must be a number."
                                    data-val-required="The Refill Amount field is required." />
 
-                            <div class="editor-label"> Full tank </div>
+                            <label class="col-sm-2 control-label"> Full tank </label>
                             <select data-ng-model="newRefill.IsFullTank">
                                 <option value="1">Yes</option>
                                 <option value="0">No</option>

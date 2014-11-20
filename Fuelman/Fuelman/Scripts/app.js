@@ -152,13 +152,13 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
         $scope.refillUnits = VehicleService.getRefillUnits();
     }
 
+    // logic for creating and cancelling creation.
     $scope.startCreateNewRefill = function () { $scope.isCreateNewRefill = true; };
     $scope.cancelCreateNewRefill = function () { $scope.isCreateNewRefill = false; };
-
     $scope.createNewVehicle = function() { $scope.isCreateNewVehicle = true; };
     $scope.cancelCreateNewVehicle = function() { $scope.isCreateNewVehicle = false; }
   
-    $scope.getVehicleTitle = function () {
+   $scope.getVehicleTitle = function () {
         if ($scope.selectedVehicle) {
             return $scope.selectedVehicle.name;
         }
@@ -223,7 +223,7 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
 
     // Css
     $scope.cssVehicleListItem = function (vehicle) {
-        if ($scope.selectedVehicle == vehicle)
+        if ($scope.selectedVehicle === vehicle)
             return "selected";
         else
             return "";
