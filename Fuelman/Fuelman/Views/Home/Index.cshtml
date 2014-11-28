@@ -79,33 +79,42 @@
                         </div>
                     </form> <!-- vehicle-form -->
 
-                    <!-- new refill form -->
-                    <form class="refill-form" action="" role="form" data-ng-show="isCreateNewRefill">
+                    <!-- refill-button -->
+                    <div>
+                        <button class="btn btn-success col-xs-12" data-ng-click="startCreateNewRefill()">
+                            <span class="glyphicon glyphicon-tint"></span> Add Refill
+                        </button>
+                    </div><!-- end refill-button -->
+
+                    <!-- refill-form -->
+                    <form class="refill-form" data-ng-show="isCreateNewRefill">
                         <div>
                             <div class="text-center"><h3>Add new Refill</h3></div>
                             <div class="form-group">
-                                <label for="Date">Date</label>
-                                <input id="Date" type="text" class="form-control">
+                                <label>Date</label>
+                                <input class="form-control" data-ng-model="newRefill.RefillDate" type="text" />
                             </div>
                             <div class="form-group">
-                                <label for="">No of Litres</label>
-                                <input type="text" class="form-control">
+                                <label>Odometer Reading</label>
+                                <input class="form-control" data-ng-model="newRefill.Odometer" type="text" />
                             </div>
                             <div class="form-group">
-                                <label for="">Odometer</label>
-                                <input type="text" class="form-control">
+                                <label>Refill Amount in {{refillUnit}}</label>
+                                <input class="form-control" data-ng-model="newRefill.RefillAmount" type="text" />
                             </div>
                             <div class="form-group">
-                                <label for="">Full Tank?</label>
-                                <input type="text" class="form-control">
+                                <label>Full Tank? </label>
+                                <input data-ng-model="newRefill.IsFullTank"  type="checkbox" />
                             </div>
                         </div>
-                        <div class="text-right">
-                            <button class="btn btn-primary">Save</button>
-                            <button class="btn">Cancel</button>
-                        </div>
-                    </form> <!-- end refill form -->
 
+                        <div class="text-right">
+                            <input type="submit" data-ng-click="saveRefill()" value="Save" class="btn btn-primary" />
+                            <input type="button" value="Cancel" data-ng-click='cancelCreateNewRefill()' class="btn" />
+                        </div>
+                    </form> <!-- end refill-form -->
+
+                   
                     <!-- chart -->
                     <div class="panel-body">
                         <div class="ct-chart" style="height:300px"></div>
@@ -116,7 +125,7 @@
                 <div class="col-sm-12 col-md-12">
                     <!-- refill history -->
                     <div class="refill-history">
-                        <table class="table table-striped">
+                        <table class="table">
                             <caption><h3 class="text-center">Refill History</h3></caption>
                             <thead>
                                 <tr>
