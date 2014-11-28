@@ -1,76 +1,28 @@
-﻿@page-bg: #EFEFEF;
-@base-font: segoe ui;
-@base-font-color: #333333;
-@sidebar-bg: #F8F8F8;
-@button-active: #CF472D;
-@button-inactive: #E5EAEE;
-@title-font-color: #555555;
-
-.center { text-align: center }
-
-.page {
-    margin-top: 45px;
+﻿body  { 
+	background: linear-gradient(#cec, #beb);
 }
-body {
-  font-family: @base-font;
-  color: @base-font-color;
-  background-color: @page-bg;
+.summary, .refill-form, .vehicle-form {
+	padding:13px;
+    margin-bottom: 20px;
 }
-
-.sidebar {
-  padding:20px;
-  border-radius: 3px;  
-  margin-bottom: 15px;
-  background-color: @sidebar-bg;  
-  box-shadow:0 0 3px #aaa, inset 0 4px 2px #fff;  
-  
-  h3 {
-    color: @title-font-color;
-    margin: 10px;
-    font-size:2em;
-  }
-  
-  ul.cars {
-    list-style: none;
-    padding:15px 0;
-    margin:0;
-    
-    li {
-      padding: 8px 10px;
-      margin: 4px 0;
-      border-radius:3px;
-      font-weight: bold;
-      font-size: 1.2em;
-    }
-    li.selected {
-      background-color: @button-active;      
-    }
-  }
-  
-  .big-number {
-    font-weight:bold;
-    font-size: 2em;
-    text-align: center;
-    color: #222;
-  }
+.footer {
+    padding:20px;
+    font-size:1.2em;
 }
-
-.dashboard {
-    .tile {
-        padding: 15px;
-        background-color: #fff;
-        box-shadow:0 0 3px #aaa, inset 0 4px 2px #fff;
-        margin-bottom: 20px;
-        border-radius: 3px;
-
-        .tile-title {
-            font-size: 2em;
-            color: #333;
-            margin-bottom: 10px;
-        }       
-    }
-   .info {
-       padding: 10px 0;
-       font-size: 1.3em;
-   }
+.refill-form, .vehicle-form {
+	background-color: #f8f8f8;	
+}
+form {
+	padding:20px 0;
+}
+.refill-history {
+	background-color: #fff;
+}
+ul.vehicle-list {
+	list-style: none;
+	font-size: 1.3em;
+}
+ul.vehicle-list li {;
+	display: block;
+	background-color: #fff;
 }

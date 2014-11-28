@@ -32,13 +32,14 @@ app.service("VehicleService", ["$http", function ($http) {
     };
 
     // Getters..
-    this.getVehicles = function () {
+    this.getVehicles = function (callOnSuccess) {
 
         $http.get('/api/vehicle')
             .success(function (data, status, headers, config) {
                 $.each(data, function () {
                     vehicles.push(this);
                 });
+                callOnSuccess();
             })
             .error(function (data, status, headers, config) {
                 // what to do if no data?
@@ -131,6 +132,7 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
     $scope.statistics = [];
 
     $scope.selectedVehicle = null;
+    $scope.selectedVehicleId = null;
 
     // form data
     $scope.newVehicle = {};
@@ -140,13 +142,11 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
     $scope.isCreateNewVehicle = false;
     $scope.isCreateNewRefill = false;    
 
-    init();
-
     function init() {
-        $scope.vehicles = VehicleService.getVehicles();
-
-        if($scope.vehicles.length > 0)
-            $scope.selectedVehicle = $scope.vehicles[0];
+        $scope.vehicles = VehicleService.getVehicles(function () {
+            if ($scope.vehicles.length > 0)
+                $scope.selectedVehicle = $scope.vehicles[0];
+        });
 
         $scope.brands = VehicleService.getBrands();
         $scope.refillUnits = VehicleService.getRefillUnits();
@@ -210,6 +210,14 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
 
             $scope.refills.length = 0;
             $scope.refills = VehicleService.getRefills(newValue.Id);
+
+            $scope.selectedVehicleId = $scope.vehicles.indexOf(newValue);
+        }
+    });
+
+    $scope.$watch('selectedVehicleId', function (newValue, oldValue) {
+        if (newValue != undefined ) {
+            $scope.selectedVehicle = $scope.vehicles[newValue];            
         }
     });
 
@@ -224,8 +232,10 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
     // Css
     $scope.cssVehicleListItem = function (vehicle) {
         if ($scope.selectedVehicle === vehicle)
-            return "selected";
+            return "active";
         else
             return "";
-    }
+    };
+
+    init();
 }]);

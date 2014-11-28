@@ -49,6 +49,7 @@ namespace Fuelman.Models
                     {
                         FuelEconomyEntry fee = new FuelEconomyEntry()
                         {
+                            Date = refill.RefillDate,
                             Fuel = totalFuel,
                             Distance = refill.Odometer - (float)odometerStart
                         };
@@ -79,6 +80,7 @@ namespace Fuelman.Models
     /// </summary>
     public class FuelEconomyEntry
     {
+        public DateTime Date { get; set; }
         public float Fuel { get; set; }
         public float Distance { get; set; }
         public float Economy

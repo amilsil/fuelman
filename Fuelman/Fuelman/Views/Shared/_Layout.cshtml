@@ -8,6 +8,7 @@
 
     <link href="~/Content/themes/default/bootstrap.css" rel="stylesheet">
     @Styles.Render("~/Content/site.css")
+    @Styles.Render("~/Content/chartist.min.css")
 
     @Html.Partial("_html5shiv")
 
@@ -23,7 +24,7 @@
 
     @RenderSection("featured", required: false)
 
-    <div class="page container">
+    <div>
         @RenderBody()
         <hr />
     </div>
@@ -32,7 +33,7 @@
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/Scripts/app.js")
-
+    @Scripts.Render("~/Scripts/Chartist.js")
 
     @RenderSection("scripts", required: false)
 </body>

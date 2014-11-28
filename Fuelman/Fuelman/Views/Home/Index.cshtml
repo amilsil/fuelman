@@ -6,139 +6,195 @@
 
 }
 
-<div data-ng-app="fuelman">
-    <!-- two row layout -->
-    <div class="container">
-        <div class="row" data-ng-controller="VehicleController">
-            <!-- sidebar: list of vehicles -->
-            <div class="col-md-3">
-                <div class="sidebar">
-                    <h3 class="center"> Cars </h3>
-                    <div class='big-number'>34,566 km</div>
-                    <ul class='cars'>
-                        <li data-ng-repeat="vehicle in vehicles" data-ng-click="selectThisVehicle(vehicle)" data-ng-class="cssVehicleListItem(vehicle)">{{vehicle.Name}}</li>
-                    </ul>
-                    <div class="center">
-                        <button class='btn btn-primary' data-ng-click='createNewVehicle()'>New</button>
-                    </div>
+<div data-ng-app="fuelman" class="container">
+    <div class="row" data-ng-controller="VehicleController">
+        <!-- sidebar -->
+        <div class="col-xs-12 col-sm-3">
+            <div>
+                <!-- list of vehicles mobile -->
+                <div class="visible-xs">
+                    <select class="form-control" data-ng-model="selectedVehicleId">
+                        <option data-ng-repeat="vehicle in vehicles" value="{{$index}}">{{vehicle.Name}}</option>
+                    </select>
                 </div>
-            </div> <!-- end sidebar -->
-            <!-- dashboard -->
-            <div class="col-md-9 dashboard">
 
-                <!-- vehicle-form -->
-                <div class="tile form" data-ng-show="isCreateNewVehicle">
-                    <form>
-                        <label class="col-sm-2 control-label">Name</label>
-                        <div class="editor-field"> <input class="form-control" data-ng-model="newVehicle.Name" type="text" name="name" id="name" /> </div>
-                        <label class="col-sm-2 control-label">Brand</label>
-                        <select class="form-control" data-ng-model="newVehicle.Brand" data-ng-options="brand.BrandName for brand in brands"></select>
-                        <label class="col-sm-2 control-label">Model</label>
-                        <select class="form-control" data-ng-model="newVehicle.Model" data-ng-options="model.ModelName for model in models"></select>
-                        <label class="col-sm-2 control-label">Refill Unit</label>
-                        <select class="form-control" data-ng-model="newVehicle.RefillUnit" data-ng-options="unit.Description for unit in refillUnits"></select>
-                        <p>
-                            <input type="submit" data-ng-click="saveVehicle()" value="Add" class="btn btn-primary" />
+                <!-- list of vehicles tablet -->
+                <div class="hidden-xs">
+                    <ul class="vehicle-list list-group">
+                        <li class="list-group-item" data-ng-repeat="vehicle in vehicles"
+                            data-ng-click="selectThisVehicle(vehicle)"
+                            data-ng-class="cssVehicleListItem(vehicle)">
+                            <span class="glyphicon glyphicon-file"></span> {{vehicle.Name}}
+                        </li>                    
+                    </ul>
+                </div>
+
+                <!-- Add Vehicle button -->
+                <div>
+                    <button class="btn btn-primary col-xs-12" data-ng-click="createNewVehicle()">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                        Add Vehicle
+                    </button>
+                </div> <!-- end add vehicle button -->
+                <!-- vehicle summary -->
+                <div class="text-center">
+                    <h1><b>15.2 kmpl</b></h1>
+                    <span>15,666 kms</span>
+                    <span>1667 litres</span>
+                </div>
+
+            </div>
+        </div> <!-- end sidebar -->
+
+        <!-- right pane -->
+        <div class="col-xs-12 col-sm-9">
+            <div class="row">
+                <div class="col-sm-12 col-md-12">
+
+                    <!-- vehicle-form -->
+                    <form class="vehicle-form" data-ng-show="isCreateNewVehicle">
+                        <div>
+                            <div class="text-center"><h3>Add new Vehicle</h3></div>
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input class="form-control" data-ng-model="newVehicle.Name" type="text" name="name" id="name" />
+                            </div>
+                            <div class="form-group">
+                                <label>Brand</label>
+                                <select class="form-control" data-ng-model="newVehicle.Brand" data-ng-options="brand.BrandName for brand in brands"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Model</label>
+                                <select class="form-control" data-ng-model="newVehicle.Model" data-ng-options="model.ModelName for model in models"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Refill Unit</label>
+                                <select class="form-control" data-ng-model="newVehicle.RefillUnit" data-ng-options="unit.Description for unit in refillUnits"></select>
+                            </div>
+                        </div>
+
+                        <div class="text-right">
+                            <input type="submit" data-ng-click="saveVehicle()" value="Save" class="btn btn-primary" />
                             <input type="button" value="Cancel" data-ng-click='cancelCreateNewVehicle()' class="btn" />
-                        </p>
-                    </form>
-                </div> <!-- vehicle-form -->
-
-                <!-- vehicle-overview -->
-                <div class="tile vehicle-overview">
-                    <div class="tile-title">
-                        <span class="brand">{{selectedVehicle.Name}}</span>
-                        (<span class="model">{{selectedVehicle.BrandName}} {{selectedVehicle.ModelName}}</span>)
-                    </div>
-                    <!-- statistics -->
-                    <div class="statistics" data-ng-show="selectedVehicle">
-                        <div class="tile-title"> Statistics </div>
-                        <div data-ng-show="statistics.length > 0">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Fuel</th>
-                                        <th>Distance</th>
-                                        <th>Economy</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-ng-repeat="stat in statistics">
-                                    <tr>
-                                        <td>{{stat.Fuel}}</td>
-                                        <td>{{stat.Distance}}</td>
-                                        <td>{{stat.Economy}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                            @*<div id="chart_container">
-                            <canvas id="chart_canvas"></canvas>
-                            </div>*@
                         </div>
-                        <div data-ng-show="statistics.length ===  0">
-                            <span class="info">More refill records you add, the prettier the statistics get. Don't overkill though. :)</span>
+                    </form> <!-- vehicle-form -->
+
+                    <!-- new refill form -->
+                    <form class="refill-form" action="" role="form" data-ng-show="isCreateNewRefill">
+                        <div>
+                            <div class="text-center"><h3>Add new Refill</h3></div>
+                            <div class="form-group">
+                                <label for="Date">Date</label>
+                                <input id="Date" type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">No of Litres</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Odometer</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="">Full Tank?</label>
+                                <input type="text" class="form-control">
+                            </div>
                         </div>
-                    </div> <!-- statistics -->
-                </div> <!-- vehicle-overview -->
-
-               
-                
-                <!-- refills -->
-                <div class="tile refills">
-                    <div class="tile-title">Refill History</div>
-                    <div class='refill' data-ng-repeat="refill in refills">
-                        <div class='date'>{{refill.RefillDate}}</div>
-                        <div class='details'>
-                            <span class='odometer'><code>Odometer</code> <b>{{refill.Odometer}}</b> <code>km</code></span>
-                            <span class='refill-amount'> <b>{{refill.RefillAmount}}</b> <code>litres</code></span>
-                            <span class='fulltank-or-not'><code>fulltank</code></span>
+                        <div class="text-right">
+                            <button class="btn btn-primary">Save</button>
+                            <button class="btn">Cancel</button>
                         </div>
-                    </div>
-                    <div data-ng-show="refills.length == 0">
-                        <span class="info">You haven't added a refill yet. <br> Add one now. :)</span>
-                    </div>
-                    <p>
-                        <button data-ng-click="startCreateNewRefill()">New Refill</button>
-                    </p>
-                </div> <!-- refills -->
-                <!-- refill-form -->
-                <div class="tile form" data-ng-show="isCreateNewRefill">
-                    <div class="tile-title">New Refill</div>
-                    <form id="refill_form">
-                        <fieldset>
-                            <legend>New Refill</legend>
-                            <label class="col-sm-2 control-label"> Date </label>
-                            <input type="text" data-val="true"
-                                   data-ng-model="newRefill.RefillDate"
-                                   data-val-date="The field Date must be a Date."
-                                   data-val-required="The Date field is required." />
+                    </form> <!-- end refill form -->
 
-                            <label class="col-sm-2 control-label"> Odometer Reading </label>
-                            <input type="text" data-val="true"
-                                   data-ng-model="newRefill.Odometer"
-                                   data-val-number="The field Odometer Reading must be a number."
-                                   data-val-required="The Odometer Reading field is required." />
+                    <!-- chart -->
+                    <div class="panel-body">
+                        <div class="ct-chart" style="height:300px"></div>
+                    </div> <!-- end chart -->
 
-                            <label class="col-sm-2 control-label"> Refill Amount </label>
-                            <input type="text" data-val="true"
-                                   data-ng-model="newRefill.RefillAmount"
-                                   data-val-number="The field Refill Amount must be a number."
-                                   data-val-required="The Refill Amount field is required." />
+                </div>
 
-                            <label class="col-sm-2 control-label"> Full tank </label>
-                            <select data-ng-model="newRefill.IsFullTank">
-                                <option value="1">Yes</option>
-                                <option value="0">No</option>
-                            </select>
-                        </fieldset>
+                <div class="col-sm-12 col-md-12">
+                    <!-- refill history -->
+                    <div class="refill-history">
+                        <table class="table table-striped">
+                            <caption><h3 class="text-center">Refill History</h3></caption>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>No of Litres</th>
+                                    <th>Odometer</th>
+                                    <th>Full Tank</th>
+                                </tr>
+                            </thead>
+                            <tr data-ng-repeat="refill in refills">
+                                <td>{{refill.RefillDate}}</td>                                
+                                <td>{{refill.RefillAmount}}</td>
+                                <td>{{refill.Odometer}}</td>
+                                <td>{{refill.IsFullTank}}</td>
+                            </tr>
+                        </table>
+                    </div> <!-- end refill history -->
 
-                        <p>
-                            <input type="submit" value="Save" data-ng-click="saveRefill()" />
-                            <input type="button" value="Cancel" data-ng-click="cancelCreateNewRefill() " />
-                        </p>
-                    </form>
-                </div> <!-- refill_form -->
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- footer -->
+<div class="footer container">
+    <div class="row">
+        <div class="col-xs-12">
+            <ul class="list-unstyled">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </div>
+        <span class="col-xs-12 text-center">Copyright 2014</span>
+    </div>
+</div>
+
+
+@section Scripts {
+
+    <script language="JavaScript">
+    // Our labels and three data series
+		var data = {
+		  labels: ['Week1', 'Week2', 'Week3', 'Week4', 'Week5', 'Week6'],
+		  series: [
+		    [5, 4, 3, 7, 5, 10]
+		  ]
+		};
+
+		// We are setting a few options for our chart and override the defaults
+		var options = {
+		  // Don't draw the line chart points
+		  showPoint: true,
+		  // Disable line smoothing
+		  lineSmooth: false,
+		  // X-Axis specific configuration
+		  axisX: {
+		    // We can disable the grid for this axis
+		    showGrid: false,
+		    // and also don't show the label
+		    showLabel: true
+		  },
+		  // Y-Axis specific configuration
+		  axisY: {
+		    // Lets offset the chart a bit from the labels
+		    offset: 40,
+		    // The label interpolation function enables you to modify the values
+		    // used for the labels on each axis. Here we are converting the
+		    // values into million pound.
+		    labelInterpolationFnc: function(value) {
+		      return '$' + value + 'm';
+		    }
+		  }
+		};
+
+		// All you need to do is pass your configuration as third parameter to the chart function
+		new Chartist.Line('.ct-chart', data, options);
+
+		</script>
+}
