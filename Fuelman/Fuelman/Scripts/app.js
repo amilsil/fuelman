@@ -15,20 +15,15 @@ app.service("VehicleService", ["$http", function ($http) {
     this.addVehicle = function (v) {
         $http.post('/api/vehicle', JSON.stringify(v))
             .success(function (data, status, headers, config) {
-                alert(data);
+                vehicles.push(data);
             });
-
-        vehicles.push(v);
-        return v.id;
     };
 
     this.addRefill = function (r) {
         $http.post('/api/refill?vehicleId=' + r.VehicleId, JSON.stringify(r))
             .success(function (data, status, headers, config) {
-                alert(data);
+                refills.push(data);
             });
-
-        //refills.push(r);
     };
 
     // Getters..

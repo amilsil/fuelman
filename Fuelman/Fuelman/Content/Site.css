@@ -6,6 +6,9 @@ input[type="checkbox"] {
   width: 20px;
   height: 20px;
 }
+.btn {
+  margin: 10px 0;
+}
 .summary,
 .refill-form,
 .vehicle-form {
