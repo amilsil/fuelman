@@ -1,4 +1,4 @@
-﻿var app = angular.module("fuelman", []);
+﻿var app = angular.module("fuelman", ['ngChartist']);
 
 app.service("VehicleService", ["$http", function ($http) {
     // arrays to hold data.
@@ -99,13 +99,14 @@ app.service("VehicleService", ["$http", function ($http) {
         return refillUnits;
     };
 
-    this.getStatistics = function (vehicleId) {
+    this.getStatistics = function (vehicleId, callBack) {
         statistics.length = 0; // clear the statistics.
         $http.get('/api/stat/' + vehicleId)
             .success(function (data, status, headers, config) {                
                 $.each(data, function () {                    
                     statistics.push(this);
                 });
+                callBack();
             })
             .error(function (data, status, headers, config) {
                 // what to do if no data?
@@ -235,8 +236,8 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
         if (newValue != undefined && newValue.Id != undefined) {
             // Reset and load the dependent arrays.
             $scope.statistics.length = 0;
-            $scope.statistics = VehicleService.getStatistics(newValue.Id);
-
+            $scope.statistics = VehicleService.getStatistics(newValue.Id, function () { $scope.statChanged(); });
+            
             $scope.refills.length = 0;
             $scope.refills = VehicleService.getRefills(newValue.Id);
 
@@ -267,4 +268,17 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
     };
 
     init();
+
+    $scope.statChanged = function () {
+
+    };
+
+    $scope.chartist = {
+        barData : {
+            labels: ['Week1', 'Week2', 'Week3', 'Week4', 'Week5', 'Week6'],
+            series: [
+              [5, 4, 3, 7, 5, 10]
+            ]
+        }
+    }
 }]);

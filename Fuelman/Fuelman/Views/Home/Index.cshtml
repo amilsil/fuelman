@@ -136,10 +136,13 @@
                     </form> <!-- end refill-form -->
 
                    
-                    <!-- chart -->
+                    <!-- chart 
                     <div class="panel-body">
                         <div class="ct-chart" style="height:300px"></div>
                     </div> <!-- end chart -->
+                    <div style="height: 300px; clear:both">
+                        <chartist class="ct-chart" chartist-data="chartist.barData" chartist-chart-type="Line"></chartist>
+                    </div>
 
                 </div>
 
@@ -224,7 +227,7 @@
 		};
 
 		// All you need to do is pass your configuration as third parameter to the chart function
-		new Chartist.Line('.ct-chart', data, options);
+		//new Chartist.Line('.ct-chart', data, options);
 
 		</script>
 }
