@@ -130,7 +130,10 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
     $scope.selectedVehicleId = null;
 
     // form data
-    $scope.newVehicle = {};
+    $scope.nv_name = "";
+    $scope.nv_brand = "";
+    $scope.nv_model = "";
+    $scope.nv_refillunit = "";
     $scope.newRefill = {};
 
     // bools.
@@ -176,20 +179,24 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
     };
 
     $scope.saveVehicle = function () {
-        var vehicle = {
-            Name: $scope.newVehicle.Name,
-            BrandId: $scope.newVehicle.Brand.Id,
-            ModelId: $scope.newVehicle.Model.Id,
-            BrandName:$scope.newVehicle.Brand.BrandName,
-            ModelName: $scope.newVehicle.Model.ModelName,
-            RefillUnitId: $scope.newVehicle.RefillUnit.Id
-        };
-      
-        VehicleService.addVehicle(vehicle);
-        
-        $scope.newVehicle = {};
-        $scope.isCreateNewVehicle = false;
-        $scope.selectedVehicle = vehicle;
+
+        // Do some client side validations
+        if ($("#vehicle_form").valid() === true) {
+            var vehicle = {
+                Name: $scope.nv_name,
+                BrandId: $scope.nv_brand.Id,
+                ModelId: $scope.nv_model.Id,
+                BrandName: $scope.nv_brand.BrandName,
+                ModelName: $scope.nv_model.ModelName,
+                RefillUnitId: $scope.nv_refillunit.Id
+            };
+
+            VehicleService.addVehicle(vehicle);
+
+            $scope.newVehicle = {};
+            $scope.isCreateNewVehicle = false;
+            $scope.selectedVehicle = vehicle;
+        }        
     };
 
     $scope.selectThisVehicle = function (vehicle) {
@@ -217,7 +224,7 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
     });
 
     // When the brand changes..
-    $scope.$watch('newVehicle.Brand', function (newValue, oldValue) {
+    $scope.$watch('nv_brand', function (newValue, oldValue) {
         if (newValue != undefined && newValue.Id != undefined) {
             $scope.models.length = 0;
             $scope.models = VehicleService.getModels(newValue.Id);

@@ -52,24 +52,36 @@
                 <div class="col-sm-12 col-md-12">
 
                     <!-- vehicle-form -->
-                    <form class="vehicle-form" data-ng-show="isCreateNewVehicle">
+                    <form id="vehicle_form" name="vehicle_form" class="vehicle-form" data-ng-show="isCreateNewVehicle" novalidate>
                         <div>
                             <div class="text-center"><h2>Add new Vehicle</h2></div>
                             <div class="form-group">
                                 <label>Name</label>
-                                <input class="form-control" data-ng-model="newVehicle.Name" type="text" name="name" id="name" />
+                                <input class="form-control" name="nv_name" data-ng-model="nv_name" type="text" placeholder="Any name you like would do" required />
+                                <div class="text-right">
+                                    <span data-ng-show="!vehicle_form.nv_name.$error.required" class="glyphicon glyphicon-ok"></span>                                
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Brand</label>
-                                <select class="form-control" data-ng-model="newVehicle.Brand" data-ng-options="brand.BrandName for brand in brands"></select>
+                                <select class="form-control" name="nv_brand" data-ng-model="nv_brand" data-ng-options="brand.BrandName for brand in brands" required></select>
+                                <div class="text-right">
+                                    <span data-ng-show="!vehicle_form.nv_brand.$error.required" class="glyphicon glyphicon-ok"></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Model</label>
-                                <select class="form-control" data-ng-model="newVehicle.Model" data-ng-options="model.ModelName for model in models"></select>
+                                <select class="form-control" name="nv_model" data-ng-model=" nv_model" data-ng-options="model.ModelName for model in models" required></select>
+                                <div class="text-right">
+                                    <span data-ng-show="!vehicle_form.nv_model.$error.required" class="glyphicon glyphicon-ok"></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Refill Unit</label>
-                                <select class="form-control" data-ng-model="newVehicle.RefillUnit" data-ng-options="unit.Description for unit in refillUnits"></select>
+                                <select class="form-control" name="nv_refillunit" data-ng-model=" nv_refillunit" data-ng-options="unit.Description for unit in refillUnits" required></select>
+                                <div class="text-right">
+                                    <span data-ng-show="!vehicle_form.nv_refillunit.$error.required" class="glyphicon glyphicon-ok"></span>
+                                </div>
                             </div>
                         </div>
 
