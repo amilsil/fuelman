@@ -99,24 +99,33 @@
                     </div><!-- end refill-button -->
 
                     <!-- refill-form -->
-                    <form class="refill-form" data-ng-show="isCreateNewRefill">
+                    <form class="refill-form" name="refill_form" data-ng-show="isCreateNewRefill">
                         <div>
                             <div class="text-center"><h2>Add new Refill</h2></div>
                             <div class="form-group">
                                 <label>Date</label>
-                                <input class="form-control" data-ng-model="newRefill.RefillDate" type="text" />
+                                <input class="form-control" name="nr_refilldate" data-ng-model="nr_refilldate" type="date" placeholder="yyyy-MM-dd" required />
+                                <div class="text-right">
+                                    <span data-ng-show="!refill_form.nr_refilldate.$error.required" class="glyphicon glyphicon-ok"></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Odometer Reading</label>
-                                <input class="form-control" data-ng-model="newRefill.Odometer" type="text" />
+                                <input class="form-control" name="nr_odometer" data-ng-model="nr_odometer" type="number" placeholder="odometer reading" required />
+                                <div class="text-right">
+                                    <span data-ng-show="!refill_form.nr_odometer.$error.required && !refill_form.nr_odometer.$error.number" class="glyphicon glyphicon-ok"></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Refill Amount in {{refillUnit}}</label>
-                                <input class="form-control" data-ng-model="newRefill.RefillAmount" type="text" />
+                                <input class="form-control" name="nr_refillamount" data-ng-model="nr_refillamount" type="number" placeholder="refill amount in {{refillUnit}}" required />
+                                <div class="text-right">
+                                    <span data-ng-show="!refill_form.nr_refillamount.$error.required && !refill_form.nr_refillamount.$error.number" class="glyphicon glyphicon-ok"></span>
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label>Full Tank? </label>
-                                <input data-ng-model="newRefill.IsFullTank"  type="checkbox" />
+                                <input name="nr_isfulltank" data-ng-model="nr_isfulltank"  type="checkbox" />
                             </div>
                         </div>
 

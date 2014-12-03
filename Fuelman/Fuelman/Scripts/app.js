@@ -130,11 +130,16 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
     $scope.selectedVehicleId = null;
 
     // form data
+    // vehicle
     $scope.nv_name = "";
     $scope.nv_brand = "";
     $scope.nv_model = "";
     $scope.nv_refillunit = "";
-    $scope.newRefill = {};
+    // refill
+    $scope.nr_refilldate = new Date();
+    $scope.nr_odometer = "";
+    $scope.nr_refillamount = "";
+    $scope.nr_isfulltank = true;
 
     // bools.
     $scope.isCreateNewVehicle = false;
@@ -150,6 +155,20 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
         $scope.refillUnits = VehicleService.getRefillUnits();
     }
 
+    function resetRefillForm() {
+        $scope.nr_refilldate = new Date();
+        $scope.nr_odometer = "";
+        $scope.nr_refillamount = "";
+        $scope.nr_isfulltank = true;
+    }
+
+    function resetVehicleForm() {
+        $scope.nv_name = "";
+        $scope.nv_brand = "";
+        $scope.nv_model = "";
+        $scope.nv_refillunit = "";
+    }
+
     // logic for creating and cancelling creation.
     $scope.startCreateNewRefill = function () { $scope.isCreateNewRefill = true; };
     $scope.cancelCreateNewRefill = function () { $scope.isCreateNewRefill = false; };
@@ -163,24 +182,30 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
     };
 
     // Saving logic
-    $scope.saveRefill = function () {
-        var refill = {
-            RefillDate: $filter('date')(new Date($scope.newRefill.RefillDate), "yyyy-MM-ddTHH:mm:ss"),
-            Odometer:       $scope.newRefill.Odometer,
-            RefillAmount:   $scope.newRefill.RefillAmount,
-            IsFullTank:     $scope.newRefill.IsFullTank,
-            VehicleId:      $scope.selectedVehicle.Id
-        };
+   $scope.saveRefill = function () {
 
-        VehicleService.addRefill(refill);
+       //if valid, save.
+       if ($("#vehicle_form").valid() === true) {
+           var refill = {
+               RefillDate: $filter('date')(new Date($scope.nr_refilldate), "yyyy-MM-ddTHH:mm:ss"),
+               Odometer: $scope.nr_odometer,
+               RefillAmount: $scope.nr_refillamount,
+               IsFullTank: $scope.nr_isfulltank,
+               VehicleId: $scope.selectedVehicle.Id
+           };
 
-        $scope.newRefill = {};
-        $scope.isCreateNewRefill = false;
+           VehicleService.addRefill(refill);
+
+           //reset the form values.
+           resetRefillForm();
+           // hide the form
+           $scope.isCreateNewRefill = false;
+       }
     };
 
     $scope.saveVehicle = function () {
 
-        // Do some client side validations
+        //if valid, save.
         if ($("#vehicle_form").valid() === true) {
             var vehicle = {
                 Name: $scope.nv_name,
@@ -193,7 +218,9 @@ app.controller("VehicleController", ["$scope", "$filter", "VehicleService", func
 
             VehicleService.addVehicle(vehicle);
 
-            $scope.newVehicle = {};
+            // reset the form values.
+            resetVehicleForm();
+
             $scope.isCreateNewVehicle = false;
             $scope.selectedVehicle = vehicle;
         }        
