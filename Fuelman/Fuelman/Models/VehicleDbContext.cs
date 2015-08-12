@@ -13,7 +13,7 @@ namespace Fuelman.Models
         public DbSet<RefillUnit> RefillUnits { get; set; }
 
         public VehicleDbContext()
-            : base("name=DefaultConnection")
+            : base("name=TestVehicleContext")
         {
 
         }

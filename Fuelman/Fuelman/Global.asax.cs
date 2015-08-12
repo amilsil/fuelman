@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,13 @@ namespace Fuelman
                 v => v is System.Web.Http.Validation.Providers.InvalidModelValidatorProvider);
             //serializerSettings.PreserveReferencesHandling = PreserveReferencesHandling.None;
             //serializerSettings.NullValueHandling = NullValueHandling.Ignore;
+
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.ColoredConsole()
+                .WriteTo.Seq("http://localhost:5341")
+                .CreateLogger();
+
+            Log.Information("Hello, {Name}!", Environment.UserName);
         }
     }
 }
